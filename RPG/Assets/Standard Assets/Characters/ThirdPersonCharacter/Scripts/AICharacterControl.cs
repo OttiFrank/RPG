@@ -28,6 +28,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             if (target != null)
                 agent.SetDestination(target.position);
 
+            // TODO: FIX
             if (agent.remainingDistance > agent.stoppingDistance)
                 character.Move(agent.desiredVelocity, false, false);
             else
