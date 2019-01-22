@@ -17,6 +17,7 @@ namespace RPG.Weapons
         [SerializeField] GameObject weaponModel;
         [SerializeField] float weaponDamage;
         [SerializeField] float weaponRange;
+        [SerializeField] AnimationClip attackAnim;
         
         // Getters
         public GameObject GetWeaponModel
@@ -38,6 +39,14 @@ namespace RPG.Weapons
             get
             {
                 return weaponRange; 
+            }
+        }
+        public AnimationClip GetAttackAnimation
+        {
+            get
+            {
+                attackAnim.events = new AnimationEvent[0];
+                return attackAnim;
             }
         }
     }    

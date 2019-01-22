@@ -1,18 +1,62 @@
-﻿using System.Collections;
+﻿using RPG.Weapons;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+namespace RPG.Characters
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Player : MonoBehaviour
     {
-        
-    }
+        [SerializeField] bool godMode = false;
+        [SerializeField] float maxHealth = 100.0f;
+        [SerializeField] WeaponConfig weaponInUse;
+        [SerializeField] AnimatorOverrideController animatorOverrideController;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        float currentHealth;
+        bool isAlive;
+        Animator animator;
+
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            isAlive = true;
+            SetMaxCharacterHealth();
+            SetupRuntimeAnimator();
+        }
+
+       
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (isAlive)
+            {
+                HandleUserInput();
+            }
+        }
+
+        private void SetMaxCharacterHealth()
+        {
+            currentHealth = maxHealth;
+        }
+
+        private void SetupRuntimeAnimator()
+        {
+            animator = GetComponent<Animator>();
+            animator.runtimeAnimatorController = animatorOverrideController;
+            animatorOverrideController["Basic Attack"] = weaponInUse.GetAttackAnimation;
+        }
+
+        private void HandleUserInput()
+        {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                animator.SetTrigger("Attack");
+            }
+        }
     }
 }
+
