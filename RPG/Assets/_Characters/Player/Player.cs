@@ -84,6 +84,7 @@ namespace RPG.Characters
             animatorOverrideController["Basic Attack"] = weaponInUse.GetAttackAnimation;
             animatorOverrideController["Idle"] = weaponInUse.GetIdleAnimation;
             animatorOverrideController["Death"] = weaponInUse.GetDeathAnimation;
+            animatorOverrideController["Run"] = weaponInUse.GetRunningAnimation;
         }
 
         private void HandleUserInput()

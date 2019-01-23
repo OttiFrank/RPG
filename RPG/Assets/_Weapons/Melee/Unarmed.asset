@@ -22,3 +22,4 @@ MonoBehaviour:
   idleAnim: {fileID: 7400000, guid: 393274f3704ac8a49adb190785ca48db, type: 3}
   deathAnim: {fileID: 7400000, guid: 6751f06affc8c1946a3a2c07d7b51e29, type: 3}
   timeBetweenAttacks: 1
+  runAnimation: {fileID: 7400000, guid: e3ac52fe396a1ec469f9e6e602e4f4c3, type: 3}

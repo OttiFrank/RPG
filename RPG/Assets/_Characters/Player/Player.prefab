@@ -32,13 +32,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7692133104360191008
+--- !u!114 &1766041079
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7692133104600043853}
+  m_GameObject: {fileID: 7692133104600099105}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 448a9055f1d6c874da59b8c2844606b7, type: 3}
@@ -170,6 +170,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5071480439342293219, guid: 7737647c22c1fc64a88d5cd030c352ce,
+        type: 3}
+      propertyPath: weaponInUse
+      value: 
+      objectReference: {fileID: 11400000, guid: 7d3d4779b6982794c96d7fea510fa500,
+        type: 2}
+    - target: {fileID: 11469404, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 3}
+      propertyPath: m_MovingTurnSpeed
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 13783410, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -182,9 +192,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7692133104600213345}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7692133104600043853 stripped
+--- !u!1 &7692133104600099105 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 177708, guid: 7737647c22c1fc64a88d5cd030c352ce,
+  m_CorrespondingSourceObject: {fileID: 118336, guid: 7737647c22c1fc64a88d5cd030c352ce,
     type: 3}
   m_PrefabInstance: {fileID: 7692133104600213345}
   m_PrefabAsset: {fileID: 0}

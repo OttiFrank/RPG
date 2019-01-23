@@ -6,7 +6,7 @@ namespace RPG.Weapons
 {
     public enum WeaponType
     {
-        Ranged, 
+        Ranged,
         Melee
     }
     [CreateAssetMenu(menuName = ("RPG/Create new weapon"))]
@@ -21,7 +21,8 @@ namespace RPG.Weapons
         [SerializeField] AnimationClip idleAnim;
         [SerializeField] AnimationClip deathAnim;
         [SerializeField] float timeBetweenAttacks;
-        
+        [SerializeField] AnimationClip runAnimation;
+
         // Getters
         public GameObject GetWeaponModel
         {
@@ -41,7 +42,7 @@ namespace RPG.Weapons
         {
             get
             {
-                return weaponRange; 
+                return weaponRange;
             }
         }
         public float GetTimeBetweenAttacks
@@ -53,6 +54,14 @@ namespace RPG.Weapons
         }
 
         // Animations
+        public AnimationClip GetRunningAnimation
+        {
+            get
+            {
+                runAnimation.events = new AnimationEvent[0];
+                return runAnimation;
+            }
+        }
         public AnimationClip GetDeathAnimation
         {
             get
@@ -77,5 +86,5 @@ namespace RPG.Weapons
                 return attackAnim;
             }
         }
-    }    
+    }
 }
