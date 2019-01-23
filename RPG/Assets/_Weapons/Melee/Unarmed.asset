@@ -19,4 +19,6 @@ MonoBehaviour:
   weaponDamage: 20
   weaponRange: 15
   attackAnim: {fileID: 7400000, guid: 49377cbe59e961b47a0431b769b56067, type: 3}
-  timeBetweenAttacks: 3
+  idleAnim: {fileID: 7400000, guid: 393274f3704ac8a49adb190785ca48db, type: 3}
+  deathAnim: {fileID: 7400000, guid: 6751f06affc8c1946a3a2c07d7b51e29, type: 3}
+  timeBetweenAttacks: 1
