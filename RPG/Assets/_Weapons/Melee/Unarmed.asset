@@ -19,3 +19,4 @@ MonoBehaviour:
   weaponDamage: 20
   weaponRange: 15
   attackAnim: {fileID: 7400000, guid: 49377cbe59e961b47a0431b769b56067, type: 3}
+  timeBetweenAttacks: 3

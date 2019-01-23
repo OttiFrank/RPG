@@ -1545,6 +1545,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   godMode: 0
   maxHealth: 100
+  weaponInUse: {fileID: 11400000, guid: 2dc396001ce41df428805350dae7e92e, type: 2}
+  animatorOverrideController: {fileID: 22100000, guid: ce5c24e979b4bf04d99e37c6c22549ce,
+    type: 2}
 --- !u!136 &13615390
 CapsuleCollider:
   m_ObjectHideFlags: 0

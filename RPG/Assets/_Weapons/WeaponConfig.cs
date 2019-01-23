@@ -18,6 +18,7 @@ namespace RPG.Weapons
         [SerializeField] float weaponDamage;
         [SerializeField] float weaponRange;
         [SerializeField] AnimationClip attackAnim;
+        [SerializeField] float timeBetweenAttacks;
         
         // Getters
         public GameObject GetWeaponModel
@@ -39,6 +40,13 @@ namespace RPG.Weapons
             get
             {
                 return weaponRange; 
+            }
+        }
+        public float GetTimeBetweenAttacks
+        {
+            get
+            {
+                return timeBetweenAttacks;
             }
         }
         public AnimationClip GetAttackAnimation
