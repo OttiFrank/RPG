@@ -1,18 +1,26 @@
-﻿using System.Collections;
+﻿using RPG.Characters;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace RPG.Weapons
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Weapon : MonoBehaviour
     {
-        
-    }
+        Player player;
+        Weapon weaponInUse;
+        // Start is called before the first frame update
+        void Start()
+        {
+            GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+            player = playerObject.GetComponent<Player>();
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
     }
 }
+

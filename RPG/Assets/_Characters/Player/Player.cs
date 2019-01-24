@@ -1,4 +1,5 @@
-﻿using RPG.Weapons;
+﻿using RPG.Core;
+using RPG.Weapons;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine.Assertions;
 
 namespace RPG.Characters
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IDamageable
     {
         [SerializeField] bool godMode = false;
         [SerializeField] float maxHealth = 100.0f;
@@ -107,6 +108,11 @@ namespace RPG.Characters
                     attackTimer = Time.time;
                 }
             }            
+        }
+
+        public float TakeDamage(float damage)
+        {
+            throw new NotImplementedException();
         }
     }
 }
