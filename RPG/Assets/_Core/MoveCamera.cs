@@ -7,29 +7,44 @@ namespace RPG.Core
 {
     public class MoveCamera : MonoBehaviour
     {
-        FreeLookCam cam;
-        // Start is called before the first frame update
+        public float turnSpeed = 4.0f;
+        public Transform player;
+
+        private Vector3 offset;
+        bool isEnabled;
+
         void Start()
         {
-            cam = GetComponent<FreeLookCam>();
+            offset = new Vector3(player.position.x, player.position.y + 0f, player.position.z + 0f);
+            isEnabled = false;
         }
-
-        // Update is called once per frame
-        void Update()
+        private void LateUpdate()
         {
-            HandleUserInputs();
+            HandleUserInput();
+            //RotateCamera();
         }
 
-        private void HandleUserInputs()
+        private void HandleUserInput()
         {
             if (Input.GetButtonDown("Fire2"))
             {
-                cam.enabled = true;
+                isEnabled = true;
             }
+
             if (Input.GetButtonUp("Fire2"))
             {
-                cam.enabled = false;
+                isEnabled = false;
             }
+
+            if (isEnabled)
+                RotateCamera();
+        }
+
+        private void RotateCamera()
+        {
+            offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
+            transform.position = player.position + offset;
+            transform.LookAt(player.position);
         }
     }
 }

@@ -43,8 +43,8 @@ namespace RPG.Characters
             {                
                 dominantHand = RequestDominantHand();
                 var weapon = Instantiate(weaponModel, dominantHand.transform);
-                weapon.transform.localPosition = dominantHand.transform.localPosition;
-                weapon.transform.localRotation = dominantHand.transform.localRotation;
+                weapon.transform.localPosition = weaponInUse.weaponGrip.localPosition;
+                weapon.transform.localRotation = weaponInUse.weaponGrip.localRotation;
             }
             
         }
@@ -110,6 +110,13 @@ namespace RPG.Characters
             }            
         }
 
+        public WeaponConfig GetPlayerWeapon
+        {
+            get
+            {
+                return weaponInUse;
+            }
+        }
         public float TakeDamage(float damage)
         {
             throw new NotImplementedException();

@@ -23,6 +23,13 @@ namespace RPG.Weapons
         [SerializeField] float timeBetweenAttacks;
         [SerializeField] AnimationClip runAnimation;
 
+        //Projectile
+        [SerializeField] float initialForce;
+        [SerializeField] float speed;
+        [SerializeField] float lifetime;
+        [SerializeField] Transform projectileSpawnSpot;
+        [SerializeField] GameObject projectilePrefab;
+
         // Getters
         public GameObject GetWeaponModel
         {
@@ -50,6 +57,43 @@ namespace RPG.Weapons
             get
             {
                 return timeBetweenAttacks;
+            }
+        }
+
+        // Projectile 
+        public float GetInitialForce
+        {
+            get
+            {
+                return initialForce;
+            }
+        }
+        public float GetProjectileSpeed
+        {
+            get
+            {
+                return speed;
+            }
+        }
+        public float GetLifetime
+        {
+            get
+            {
+                return lifetime;
+            }
+        }
+        public Transform GetProjectileSpawnSpot
+        {
+            get
+            {
+                return projectileSpawnSpot;
+            }
+        }
+        public GameObject GetProjectilePrefab
+        {
+            get
+            {
+                return projectilePrefab;
             }
         }
 

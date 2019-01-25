@@ -24,3 +24,9 @@ MonoBehaviour:
   deathAnim: {fileID: 7400000, guid: 677509311bebcd54a89ef50613d1cfa7, type: 3}
   timeBetweenAttacks: 2
   runAnimation: {fileID: 7400000, guid: f8e0a3512fe05e240bf9d4cff6d8fc26, type: 3}
+  initialForce: 100
+  speed: 50
+  lifetime: 3
+  projectileSpawnSpot: {fileID: 0}
+  projectilePrefab: {fileID: 2802576852413543387, guid: baa3bb976bdc2074fa8df6fa813cbdf7,
+    type: 3}
