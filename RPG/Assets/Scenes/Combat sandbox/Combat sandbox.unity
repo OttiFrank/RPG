@@ -112,12 +112,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: b51e50c4ce4819e41aef031290c79923, type: 2}
---- !u!20 &126170730 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-    type: 3}
-  m_PrefabInstance: {fileID: 1019446149}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,11 +224,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4002490034304732321, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 4002490034304438401, guid: 3a6a37ad4d6227349ac17674510917da,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -294,69 +283,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1446588470}
-    - target: {fileID: 1883501374, guid: 3a6a37ad4d6227349ac17674510917da, type: 3}
-      propertyPath: aimCamera
-      value: 
-      objectReference: {fileID: 126170730}
-    - target: {fileID: 1883501374, guid: 3a6a37ad4d6227349ac17674510917da, type: 3}
-      propertyPath: defaultCamera
-      value: 
-      objectReference: {fileID: 1539531877}
-    - target: {fileID: 7898237335964821099, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.61960787
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.6745098
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.76862746
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 0.019607844
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: near clip plane
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: far clip plane
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: field of view
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: orthographic size
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_Depth
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5761877651212792025, guid: 3a6a37ad4d6227349ac17674510917da,
-        type: 3}
-      propertyPath: m_HDR
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a6a37ad4d6227349ac17674510917da, type: 3}
 --- !u!1001 &1361992624
@@ -447,12 +373,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8811486473085534731, guid: 897a8cd96a24e4448a5eb22b79472133,
     type: 3}
   m_PrefabInstance: {fileID: 1608217456}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &1539531877 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4002490034305977989, guid: 3a6a37ad4d6227349ac17674510917da,
-    type: 3}
-  m_PrefabInstance: {fileID: 1019446149}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1608217456
 PrefabInstance:
