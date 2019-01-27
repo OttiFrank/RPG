@@ -33,4 +33,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         throw new System.NotImplementedException();
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Enemy hit");
+    }
 }

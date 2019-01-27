@@ -37,6 +37,8 @@ namespace RPG.Weapons
         {
             Debug.Log(collision.collider.gameObject.name);
         }
+
+        
     }
 }
 

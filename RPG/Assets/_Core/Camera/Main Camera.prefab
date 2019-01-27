@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358f71dbe5793664493bdcd696c6142c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 8811486473085534731, guid: 897a8cd96a24e4448a5eb22b79472133, type: 3}
   turnSpeed: 4
   lockCursor: 1
   aimCamera: {fileID: 5761877651212792025}

@@ -40,6 +40,15 @@ namespace RPG.Characters
             attackTimer = 0f;
         }
 
+        // Update is called once per frame
+        void Update()
+        {
+            if (isAlive)
+            {
+                HandleUserInput();
+            }
+        }
+
         private void SetupWeapon()
         {
             weaponPrefab = weaponInUse.GetWeaponModel;
@@ -89,14 +98,7 @@ namespace RPG.Characters
             return dominantHands[0].gameObject; 
         }
 
-        // Update is called once per frame
-        void Update()
-        {   
-            if (isAlive)
-            {
-                HandleUserInput();
-            }
-        }
+        
 
         private void SetMaxCharacterHealth()
         {
@@ -147,6 +149,13 @@ namespace RPG.Characters
         public float TakeDamage(float damage)
         {
             throw new NotImplementedException();
+        }
+
+        void OnDrawGizmos()
+        {
+            // Draw a yellow sphere at the transform's position
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, weaponInUse.GetWeaponRange);
         }
     }
 }
