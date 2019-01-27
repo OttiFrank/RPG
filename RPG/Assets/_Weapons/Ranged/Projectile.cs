@@ -15,6 +15,7 @@ public class Projectile : MonoBehaviour
     float speed;
     float initialForce;
     float lifetime;
+    bool justFired;
     Transform projectileSpawnSpot;
     Player player;
 
@@ -24,6 +25,10 @@ public class Projectile : MonoBehaviour
     {
         FindPlayer();
         SetupWeaponConfig();
+
+    }
+    public void FireProjectile()
+    {
 
     }
 
@@ -41,8 +46,6 @@ public class Projectile : MonoBehaviour
         speed = weaponInUse.GetProjectileSpeed;
         initialForce = weaponInUse.GetInitialForce;
         lifetime = weaponInUse.GetLifetime;
-        projectileSpawnSpot = weaponInUse.GetWeaponModel.GetComponentInChildren<ProjectileSpawnSpot>().gameObject.transform;
-        Debug.Log(projectileSpawnSpot);
     }
 
     

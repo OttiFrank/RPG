@@ -7,7 +7,8 @@ namespace RPG.Weapons
     public enum WeaponType
     {
         Ranged,
-        Melee
+        Melee,
+        Unarmed
     }
     [CreateAssetMenu(menuName = ("RPG/Create new weapon"))]
     public class WeaponConfig : ScriptableObject

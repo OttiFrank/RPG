@@ -10,21 +10,32 @@ namespace RPG.Weapons
         Player player;
         WeaponConfig weaponInUse;
         WeaponType type;
+        Projectile projectile;
         // Start is called before the first frame update
         void Start()
         {
             GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
             player = playerObject.GetComponent<Player>();
             weaponInUse = player.GetPlayerWeapon;
+
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(type == WeaponType.Ranged)
-            {
-                Instantiate(weaponInUse.GetProjectilePrefab, weaponInUse.GetProjectileSpawnSpot);
-            }
+            
+            
+        }
+
+        public void Shoot()
+        {
+            Debug.Log("Shooting");
+            
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Debug.Log(collision.collider.gameObject.name);
         }
     }
 }

@@ -23,13 +23,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2123935777654704381}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.8, y: -0, z: -0}
+  m_LocalRotation: {x: 0.000000029802301, y: -0.177704, z: 0.0000000894069, w: 0.984084}
+  m_LocalPosition: {x: -7.4, y: 0, z: 17.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8256654349006082761}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -20.472, z: 0}
 --- !u!1 &5903415246519814699
 GameObject:
   m_ObjectHideFlags: 0
@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 4162438899466682401}
   - component: {fileID: 9154408380325203865}
   - component: {fileID: 5791655000785301100}
+  - component: {fileID: 1353150323176025033}
   m_Layer: 2
   m_Name: Bow
   m_TagString: Untagged
@@ -122,3 +123,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1353150323176025033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5903415246519814699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d92da06ee80c7429ba63552d844bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

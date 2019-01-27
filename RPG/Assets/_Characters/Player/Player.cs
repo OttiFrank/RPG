@@ -15,38 +15,69 @@ namespace RPG.Characters
         [SerializeField] WeaponConfig weaponInUse;
         [SerializeField] AnimatorOverrideController animatorOverrideController;
 
-        GameObject weaponModel;
+        WeaponType type;
+        GameObject weaponPrefab;
+        GameObject projectileModel;
         GameObject dominantHand;
+        GameObject arrowHand;
         float currentHealth;
         float timeBetweenAttacks;
         float attackTimer;
         bool isAlive;
         bool canAttack = true;
         Animator animator;
+        Weapon weapon;
 
 
         // Start is called before the first frame update
         void Start()
         {
+            SetupWeapon();
             SetMaxCharacterHealth();
             PutWeaponInHands();
             SetupRuntimeAnimator();
 
-            timeBetweenAttacks = weaponInUse.GetTimeBetweenAttacks;
             attackTimer = 0f;
+        }
+
+        private void SetupWeapon()
+        {
+            weaponPrefab = weaponInUse.GetWeaponModel;
+            type = weaponInUse.type;
+            weapon = weaponPrefab.GetComponent<Weapon>();
+            timeBetweenAttacks = weaponInUse.GetTimeBetweenAttacks;
         }
 
         private void PutWeaponInHands()
         {
-            weaponModel = weaponInUse.GetWeaponModel;
-            if (weaponInUse != null && weaponModel != null)
+            weaponPrefab = weaponInUse.GetWeaponModel;
+            if (weaponInUse != null && weaponPrefab != null)
             {                
                 dominantHand = RequestDominantHand();
-                var weapon = Instantiate(weaponModel, dominantHand.transform);
+                var weapon = Instantiate(weaponPrefab, dominantHand.transform);
                 weapon.transform.localPosition = weaponInUse.weaponGrip.localPosition;
                 weapon.transform.localRotation = weaponInUse.weaponGrip.localRotation;
-            }
-            
+
+                // TODO: Change to bow only
+                if(type == WeaponType.Ranged)
+                {
+                    projectileModel = weaponInUse.GetProjectilePrefab;
+                    arrowHand = RequestArrowHand();
+                    var projectile = Instantiate(projectileModel, arrowHand.transform);
+                    projectile.transform.localPosition = weaponInUse.weaponGrip.localPosition;
+                    projectile.transform.localRotation = weaponInUse.weaponGrip.localRotation;
+                }
+                
+            }        
+        }
+
+        private GameObject RequestArrowHand()
+        {
+            var arrowHands = GetComponentsInChildren<ArrowHand>();
+            int numberOfArrowHands = arrowHands.Length;
+            Assert.IsFalse(numberOfArrowHands <= 0, "Could not find any arrow hands, please add one");
+            Assert.IsFalse(numberOfArrowHands > 1, "Found multiple arrow hands, please remove at least one");
+            return arrowHands[0].gameObject;
         }
 
         private GameObject RequestDominantHand()
@@ -58,14 +89,9 @@ namespace RPG.Characters
             return dominantHands[0].gameObject; 
         }
 
-
-
-
         // Update is called once per frame
         void Update()
-        {
-            
-
+        {   
             if (isAlive)
             {
                 HandleUserInput();
@@ -89,9 +115,7 @@ namespace RPG.Characters
         }
 
         private void HandleUserInput()
-        {
-            
-            
+        {            
             if (Input.GetButtonDown("Fire1"))
             {
                 AttackTarget();                
@@ -106,6 +130,8 @@ namespace RPG.Characters
                 {
                     animator.SetTrigger("Attack");
                     attackTimer = Time.time;
+
+                    weapon.Shoot();
                 }
             }            
         }
@@ -117,6 +143,7 @@ namespace RPG.Characters
                 return weaponInUse;
             }
         }
+
         public float TakeDamage(float damage)
         {
             throw new NotImplementedException();

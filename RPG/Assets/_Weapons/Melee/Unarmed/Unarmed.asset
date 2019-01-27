@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponGrip: {fileID: 8907580596859983222, guid: 71f8b8fd3bb8a38438c916a0d8014179,
     type: 3}
-  type: 1
-  weaponModel: {fileID: 0}
+  type: 2
+  weaponModel: {fileID: 4764932290889915907, guid: d02f4fd389899564c9e3e1c9cca2c13b,
+    type: 3}
   weaponDamage: 20
   weaponRange: 15
   attackAnim: {fileID: 7400000, guid: 49377cbe59e961b47a0431b769b56067, type: 3}
@@ -23,3 +24,8 @@ MonoBehaviour:
   deathAnim: {fileID: 7400000, guid: 6751f06affc8c1946a3a2c07d7b51e29, type: 3}
   timeBetweenAttacks: 1
   runAnimation: {fileID: 7400000, guid: e3ac52fe396a1ec469f9e6e602e4f4c3, type: 3}
+  initialForce: 0
+  speed: 0
+  lifetime: 0
+  projectileSpawnSpot: {fileID: 0}
+  projectilePrefab: {fileID: 0}
