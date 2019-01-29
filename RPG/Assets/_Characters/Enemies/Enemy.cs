@@ -16,7 +16,8 @@ public class Enemy : MonoBehaviour, IDamageable
     int hitCounter;
     Player player;
     WeaponConfig playerWeapon;
-
+    float timeBetweenHits;
+    float hitTimer;
     public float healthAsPercentage
     {
         get
@@ -32,12 +33,13 @@ public class Enemy : MonoBehaviour, IDamageable
         SetMaxHealth();
         FindPlayer();
         FindCurrentEquipedPlayerWeapon();
-        hitCounter = 0;
+        hitTimer = 0;
     }
 
     private void FindCurrentEquipedPlayerWeapon()
     {
         playerWeapon = player.GetPlayerWeapon;
+        timeBetweenHits = playerWeapon.GetTimeBetweenAttacks;
     }
 
     private void FindPlayer()
@@ -54,6 +56,8 @@ public class Enemy : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        if (currentHealth == 0)
+            Destroy(gameObject);
 
     }
 
@@ -66,17 +70,17 @@ public class Enemy : MonoBehaviour, IDamageable
     private void OnTriggerEnter(Collider other)
     {
         float weaponDamage = playerWeapon.GetWeaponDamage;
-        if(currentHealth <= 0)
-        {
-            currentHealth = 0;
-            Destroy(gameObject);
-        } else
-        {
-            TakeDamage(weaponDamage);
-        }
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;
+                Destroy(gameObject);
+            }
+            else
+            {
+                TakeDamage(weaponDamage);
+                hitTimer = Time.deltaTime;
+            }
         
-       
-        Debug.Log(currentHealth);
         Debug.Log(other.gameObject.name);
 
     }
