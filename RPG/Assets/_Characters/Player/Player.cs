@@ -146,7 +146,7 @@ namespace RPG.Characters
             }
         }
 
-        public float TakeDamage(float damage)
+        public void TakeDamage(float damage)
         {
             throw new NotImplementedException();
         }

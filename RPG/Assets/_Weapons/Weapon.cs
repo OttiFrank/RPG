@@ -29,10 +29,8 @@ namespace RPG.Weapons
 
         public void Shoot()
         {
-            Debug.Log("Shooting");
-            
+                      
         }
-
         
 
         

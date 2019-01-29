@@ -1,4 +1,6 @@
-﻿using RPG.Core;
+﻿using RPG.Characters;
+using RPG.Core;
+using RPG.Weapons;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +13,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
     bool isAlive;
     float currentHealth;
+    int hitCounter;
+    Player player;
+    WeaponConfig playerWeapon;
 
     public float healthAsPercentage
     {
@@ -24,7 +29,21 @@ public class Enemy : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
-        SetMaxHealth();    
+        SetMaxHealth();
+        FindPlayer();
+        FindCurrentEquipedPlayerWeapon();
+        hitCounter = 0;
+    }
+
+    private void FindCurrentEquipedPlayerWeapon()
+    {
+        playerWeapon = player.GetPlayerWeapon;
+    }
+
+    private void FindPlayer()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        player = playerObject.GetComponent<Player>();
     }
 
     private void SetMaxHealth()
@@ -35,17 +54,30 @@ public class Enemy : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    
 
-    public float TakeDamage(float damage)
+
+    public void TakeDamage(float damage)
     {
-        throw new System.NotImplementedException();
+        currentHealth = currentHealth - damage; 
     }
     private void OnTriggerEnter(Collider other)
     {
+        float weaponDamage = playerWeapon.GetWeaponDamage;
+        if(currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Destroy(gameObject);
+        } else
+        {
+            TakeDamage(weaponDamage);
+        }
+        
+       
+        Debug.Log(currentHealth);
         Debug.Log(other.gameObject.name);
+
     }
 }

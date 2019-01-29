@@ -6,7 +6,7 @@ namespace RPG.Core
 {
     public interface IDamageable
     {
-        float TakeDamage(float damage); 
+        void TakeDamage(float damage); 
     }
 }
 
