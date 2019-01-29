@@ -106,7 +106,7 @@ GameObject:
   - component: {fileID: 2167223592727058576}
   m_Layer: 0
   m_Name: 2H sword
-  m_TagString: Untagged
+  m_TagString: sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -33,10 +33,7 @@ namespace RPG.Weapons
             
         }
 
-        private void OnCollisionEnter(Collision collision)
-        {
-            Debug.Log(collision.collider.gameObject.name);
-        }
+        
 
         
     }

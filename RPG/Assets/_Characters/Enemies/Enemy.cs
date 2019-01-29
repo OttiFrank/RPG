@@ -7,10 +7,19 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
 
-    [SerializeField] float maxHealth;
+    [SerializeField] float maxHealth = 100f;
 
     bool isAlive;
     float currentHealth;
+
+    public float healthAsPercentage
+    {
+        get
+        {
+            float healthAsPercentage = currentHealth / maxHealth;
+            return healthAsPercentage;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +38,14 @@ public class Enemy : MonoBehaviour, IDamageable
         
     }
 
+    
+
     public float TakeDamage(float damage)
     {
         throw new System.NotImplementedException();
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enemy hit");
+        Debug.Log(other.gameObject.name);
     }
 }
