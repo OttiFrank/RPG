@@ -43,12 +43,10 @@ namespace RPG.Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.tag);
-            
-            if(other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy")
             {
                 GameObject enemy = other.gameObject;
-                var enemyComponent = enemy.GetComponent<Enemy>();
+                var enemyComponent = enemy.GetComponentInParent<Enemy>();
                 enemyComponent.TakeDamage(weaponDamage);
             }
         }

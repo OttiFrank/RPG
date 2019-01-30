@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Assertions;
 
 namespace RPG.Characters
 {
@@ -12,12 +14,15 @@ namespace RPG.Characters
     {
 
         [SerializeField] float maxHealth = 100f;
-
         bool isAlive;
         float currentHealth;
-        int hitCounter;
         Player player;
+
+        WeaponType type;
         WeaponConfig playerWeapon;
+        Animator animator;
+        NavMeshAgent navMesh;
+
         float timeBetweenHits;
         float hitTimer;
         public float healthAsPercentage
@@ -32,10 +37,14 @@ namespace RPG.Characters
         // Start is called before the first frame update
         void Start()
         {
+            animator = GetComponent<Animator>();
+            navMesh = GetComponent<NavMeshAgent>();
             SetMaxHealth();
             FindPlayer();
             FindCurrentEquipedPlayerWeapon();
         }
+
+    
 
         private void FindCurrentEquipedPlayerWeapon()
         {
@@ -67,7 +76,13 @@ namespace RPG.Characters
             currentHealth = currentHealth - damage;
 
             if (currentHealth <= 0)
-                Destroy(gameObject);
+            {
+                navMesh.enabled = false;
+                animator.enabled = false;
+                GameObject socket = transform.Find("UI Socket").gameObject;
+                socket.SetActive(false);
+            }
+                
         }
     }
 }
