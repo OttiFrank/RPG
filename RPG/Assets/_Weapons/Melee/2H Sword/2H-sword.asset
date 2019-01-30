@@ -19,7 +19,7 @@ MonoBehaviour:
     type: 3}
   weaponDamage: 75
   weaponRange: 0
-  attackAnim: {fileID: 7400000, guid: dce280ced5e006c4cb0eb0fab2f51b75, type: 3}
+  attackAnim: {fileID: 7400000, guid: 7b5b17e2d42e0424f9c36012595dc9b6, type: 3}
   idleAnim: {fileID: 7400000, guid: 8370b4128ccb08c4a8944d3f0d66cebc, type: 3}
   deathAnim: {fileID: 7400000, guid: 9757788373ec8734cb4f7a3db84aef2f, type: 3}
   timeBetweenAttacks: 4

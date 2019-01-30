@@ -132,8 +132,6 @@ namespace RPG.Characters
                 {
                     animator.SetTrigger("Attack");
                     attackTimer = Time.time;
-
-                    weapon.Shoot();
                 }
             }            
         }

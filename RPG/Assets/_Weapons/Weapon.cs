@@ -25,6 +25,7 @@ namespace RPG.Weapons
         private void FindPlayerWeapon()
         {
             weaponInUse = player.GetPlayerWeapon;
+            weaponDamage = weaponInUse.GetWeaponDamage;
         }
 
         private void FindPlayer()
@@ -40,13 +41,17 @@ namespace RPG.Weapons
             
         }
 
-        public void Shoot()
+        private void OnTriggerEnter(Collider other)
         {
-                      
+            Debug.Log(other.gameObject.tag);
+            
+            if(other.gameObject.tag == "Enemy")
+            {
+                GameObject enemy = other.gameObject;
+                var enemyComponent = enemy.GetComponent<Enemy>();
+                enemyComponent.TakeDamage(weaponDamage);
+            }
         }
-        
-
-        
     }
 }
 
