@@ -6,13 +6,14 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    [SerializeField] float turnSpeed = 4.0f;
+    [SerializeField] float sensitivity = 4.0f; 
     [SerializeField] bool lockCursor = false;
     [Header("Cameras")]
     [SerializeField] Camera aimCamera;
     [SerializeField] Camera mainCamera;
 
-
+    float minHeight = -0.30f;
+    float maxHeight = 0.60f;
     Vector3 offset;
     bool isAiming;
     float baseFOV;
@@ -33,7 +34,6 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         HandleUserInput();
-        RotateCamera();
         if (lockCursor && Input.GetMouseButtonUp(0))
         {
             Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
@@ -52,7 +52,20 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     private void LateUpdate()
     {
+        RotateCameraAroundPlayer();
         transform.position = player.transform.position + offset;
+    }
+
+    private void RotateCameraAroundPlayer()
+    {
+        float rotateHorizontal = -Input.GetAxis("Mouse X");
+        float rotateVertical = -Input.GetAxis("Mouse Y");
+        Debug.Log(transform.localRotation.x); 
+        
+        transform.RotateAround(player.transform.position, -Vector3.up, rotateHorizontal * sensitivity);
+        transform.RotateAround(Vector3.zero, transform.right, rotateVertical * sensitivity);
+        
+            
     }
 
     private void HandleUserInput()
@@ -79,17 +92,6 @@ public class CameraController : MonoBehaviour
         mainCamera.enabled = false;
         aimCamera.enabled = true;
         
-
-    }
-
-    private void RotateCamera()
-    {
-        //float smooth = 0.95f; //0.01 - super smooth, 1 - super sharp 
-        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
-        transform.position = player.transform.position + offset;
-        transform.LookAt(player.transform.position);
-        //Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, transform.position, smooth);
-
 
     }
 
