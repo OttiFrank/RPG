@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] float turnSpeed = 4.0f;
     [SerializeField] bool lockCursor = false;
+    [Header("Cameras")]
     [SerializeField] Camera aimCamera;
     [SerializeField] Camera mainCamera;
 

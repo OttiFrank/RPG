@@ -70,23 +70,11 @@ namespace RPG.Characters
                 // TODO: Change to bow only
                 if(type == WeaponType.Ranged)
                 {
-                    projectileModel = weaponInUse.GetProjectilePrefab;
-                    arrowHand = RequestArrowHand();
-                    var projectile = Instantiate(projectileModel, arrowHand.transform);
-                    projectile.transform.localPosition = weaponInUse.weaponGrip.localPosition;
-                    projectile.transform.localRotation = weaponInUse.weaponGrip.localRotation;
+                    GameObject arrowSpawnPoint = weaponInUse.GetProjectilePrefab.transform.Find("ArrowSpawnPoint").gameObject;
+                    Instantiate(weaponInUse.GetProjectilePrefab, arrowSpawnPoint.transform.position, Quaternion.identity);
                 }
                 
             }        
-        }
-
-        private GameObject RequestArrowHand()
-        {
-            var arrowHands = GetComponentsInChildren<ArrowHand>();
-            int numberOfArrowHands = arrowHands.Length;
-            Assert.IsFalse(numberOfArrowHands <= 0, "Could not find any arrow hands, please add one");
-            Assert.IsFalse(numberOfArrowHands > 1, "Found multiple arrow hands, please remove at least one");
-            return arrowHands[0].gameObject;
         }
 
         private GameObject RequestDominantHand()

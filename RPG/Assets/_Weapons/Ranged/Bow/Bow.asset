@@ -27,6 +27,7 @@ MonoBehaviour:
   initialForce: 100
   speed: 50
   lifetime: 3
-  projectileSpawnSpot: {fileID: 0}
+  projectileSpawnSpot: {fileID: 6408420738684265445, guid: e64b2f1c166a179459643418ae7ce089,
+    type: 3}
   projectilePrefab: {fileID: 2802576852413543387, guid: baa3bb976bdc2074fa8df6fa813cbdf7,
     type: 3}
