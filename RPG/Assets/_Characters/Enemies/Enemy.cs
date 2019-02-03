@@ -17,7 +17,8 @@ namespace RPG.Characters
         [SerializeField] float maxHealth = 100f;
         [SerializeField] WeaponConfig weaponInUse;
         [SerializeField] AnimatorOverrideController animatorOverrideController;
-        [SerializeField] float attackRange = 12f;
+        [SerializeField] float chaseRadius = 12f;
+        [SerializeField] float attackRadius = 2f;
         
         WeaponType type;
         Player player;
@@ -31,9 +32,10 @@ namespace RPG.Characters
 
         float currentHealth;
         float timeBetweenAttacks;
+        float attackTimer;
         float timeBetweenHits;
         float hitTimer;
-        bool isAlive;
+        bool isAlive = true;
         public float healthAsPercentage
         {
             get
@@ -55,6 +57,8 @@ namespace RPG.Characters
             SetupAnimatorOverriderController();
             
             PutWeaponInHands();
+
+            attackTimer = 0f;
         }
 
         private void SetupWeapon()
@@ -130,12 +134,27 @@ namespace RPG.Characters
         private void CheckDistanceToPlayer()
         {
             float dist = Vector3.Distance(transform.position, player.transform.position);
-            if (dist <= attackRange)
+            if (dist <= chaseRadius)
             {
                 aiCharacterControl.SetTarget(player.transform);
+
+                if (dist <= attackRadius)
+                    AttackPlayer();
             }
             else
                 aiCharacterControl.SetTarget(null); 
+        }
+
+        private void AttackPlayer()
+        {
+            if(isAlive)
+            {
+                if (Time.time - attackTimer > timeBetweenAttacks)
+                {
+                    animator.SetTrigger("Attack");
+                    attackTimer = Time.time;
+                }
+            }
         }
 
         public void TakeDamage(float damage)
@@ -156,6 +175,16 @@ namespace RPG.Characters
             GameObject socket = transform.Find("UI Socket").gameObject;
             socket.SetActive(false);
             aiCharacterControl.enabled = false;
+            isAlive = false;
+        }
+
+        private void OnDrawGizmos()
+        {
+            Color color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, chaseRadius);
+
+            Color Attackcolor = Color.red;
+            Gizmos.DrawWireSphere(transform.position, attackRadius);
         }
     }
 }

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d32f45ebf838a46b8929897c58ba36, type: 3}
   m_Name: 2H-sword
   m_EditorClassIdentifier: 
+  AIWeapon: 0
   weaponGrip: {fileID: 3040293260122080082, guid: 2ed2d912a03d8964bb29676c68fd6d5f,
     type: 3}
   type: 1

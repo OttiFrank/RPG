@@ -133,7 +133,19 @@ namespace RPG.Characters
 
         public void TakeDamage(float damage)
         {
-            throw new NotImplementedException();
+            if(isAlive && !godMode)
+            {
+                currentHealth = currentHealth - damage;
+
+                if (currentHealth <= 0)
+                    Die();
+            }
+        }
+
+        private void Die()
+        {
+            Debug.Log("Player died"); 
+            animator.enabled = false;
         }
 
         void OnDrawGizmos()

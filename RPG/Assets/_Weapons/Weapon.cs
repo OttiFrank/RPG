@@ -56,6 +56,13 @@ namespace RPG.Weapons
                 var enemyComponent = enemy.GetComponentInParent<Enemy>();
                 enemyComponent.TakeDamage(weaponDamage);
             }
+            if(other.gameObject.tag == "Player" && aiCharacter)
+            {
+                GameObject player = other.gameObject;
+                var playerComponent = player.GetComponentInParent<Player>();
+                playerComponent.TakeDamage(weaponDamage);
+                Debug.Log("Player hit by: " + weaponDamage); 
+            }
         }
     }
 }
