@@ -13,6 +13,7 @@ namespace RPG.Weapons
     [CreateAssetMenu(menuName = ("RPG/Create new weapon"))]
     public class WeaponConfig : ScriptableObject
     {
+        public bool AIWeapon = false;
         public Transform weaponGrip;
         public WeaponType type = WeaponType.Ranged;
         [SerializeField] GameObject weaponModel;
@@ -130,6 +131,11 @@ namespace RPG.Weapons
                 attackAnim.events = new AnimationEvent[0];
                 return attackAnim;
             }
+        }
+
+        public void setEnemyWeapon(bool value)
+        {
+            AIWeapon = value;
         }
     }
 }

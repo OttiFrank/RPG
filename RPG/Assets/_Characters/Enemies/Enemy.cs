@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Assertions;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace RPG.Characters
 {
@@ -15,20 +16,24 @@ namespace RPG.Characters
 
         [SerializeField] float maxHealth = 100f;
         [SerializeField] WeaponConfig weaponInUse;
-        [SerializeField] AnimatorOverrideController animatorOverrideController; 
-        bool isAlive;
-        float currentHealth;
-        Player player;
+        [SerializeField] AnimatorOverrideController animatorOverrideController;
+        [SerializeField] float attackRange = 12f;
+        
         WeaponType type;
+        Player player;
         WeaponConfig playerWeapon;
+        AICharacterControl aiCharacterControl;
         Weapon weapon;
         Animator animator;
         NavMeshAgent navMesh;
         GameObject weaponPrefab;
         GameObject dominantHand;
+
+        float currentHealth;
         float timeBetweenAttacks;
         float timeBetweenHits;
         float hitTimer;
+        bool isAlive;
         public float healthAsPercentage
         {
             get
@@ -37,17 +42,18 @@ namespace RPG.Characters
                 return healthAsPercentage;
             }
         }
-
         // Start is called before the first frame update
         void Start()
         {
             animator = GetComponent<Animator>();
             navMesh = GetComponent<NavMeshAgent>();
+            aiCharacterControl = GetComponent<AICharacterControl>();
             SetupWeapon();
             SetMaxHealth();
             FindPlayer();
             FindCurrentEquipedPlayerWeapon();
             SetupAnimatorOverriderController();
+            
             PutWeaponInHands();
         }
 
@@ -118,10 +124,19 @@ namespace RPG.Characters
         // Update is called once per frame
         void Update()
         {
-
+            CheckDistanceToPlayer();
         }
 
-
+        private void CheckDistanceToPlayer()
+        {
+            float dist = Vector3.Distance(transform.position, player.transform.position);
+            if (dist <= attackRange)
+            {
+                aiCharacterControl.SetTarget(player.transform);
+            }
+            else
+                aiCharacterControl.SetTarget(null); 
+        }
 
         public void TakeDamage(float damage)
         {
@@ -129,12 +144,18 @@ namespace RPG.Characters
 
             if (currentHealth <= 0)
             {
-                navMesh.enabled = false;
-                animator.enabled = false;
-                GameObject socket = transform.Find("UI Socket").gameObject;
-                socket.SetActive(false);
+                Die();                
             }
                 
+        }
+
+        private void Die()
+        {
+            navMesh.enabled = false;
+            animator.enabled = false;
+            GameObject socket = transform.Find("UI Socket").gameObject;
+            socket.SetActive(false);
+            aiCharacterControl.enabled = false;
         }
     }
 }

@@ -13,12 +13,20 @@ namespace RPG.Weapons
         WeaponType type;
         Projectile projectile;
         float weaponDamage;
-        float chargeTime; 
+        float chargeTime;
+        bool aiCharacter = false; 
         // Start is called before the first frame update
         void Start()
         {
             FindPlayer();
             FindPlayerWeapon();
+            if (GetComponentInParent<Player>() == null)
+            {
+                aiCharacter = true;
+                Debug.Log("This is not a player");
+            }
+            else
+                aiCharacter = false;
         }
 
         private void FindPlayerWeapon()
@@ -42,7 +50,7 @@ namespace RPG.Weapons
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Enemy")
+            if (other.gameObject.tag == "Enemy" && !aiCharacter)
             {
                 GameObject enemy = other.gameObject;
                 var enemyComponent = enemy.GetComponentInParent<Enemy>();

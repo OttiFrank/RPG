@@ -28,7 +28,6 @@ namespace RPG.Characters
         Animator animator;
         Weapon weapon;
 
-
         // Start is called before the first frame update
         void Start()
         {
