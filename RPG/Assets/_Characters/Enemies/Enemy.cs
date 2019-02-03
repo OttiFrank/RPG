@@ -14,15 +14,19 @@ namespace RPG.Characters
     {
 
         [SerializeField] float maxHealth = 100f;
+        [SerializeField] WeaponConfig weaponInUse;
+        [SerializeField] AnimatorOverrideController animatorOverrideController; 
         bool isAlive;
         float currentHealth;
         Player player;
-
         WeaponType type;
         WeaponConfig playerWeapon;
+        Weapon weapon;
         Animator animator;
         NavMeshAgent navMesh;
-
+        GameObject weaponPrefab;
+        GameObject dominantHand;
+        float timeBetweenAttacks;
         float timeBetweenHits;
         float hitTimer;
         public float healthAsPercentage
@@ -39,12 +43,60 @@ namespace RPG.Characters
         {
             animator = GetComponent<Animator>();
             navMesh = GetComponent<NavMeshAgent>();
+            SetupWeapon();
             SetMaxHealth();
             FindPlayer();
             FindCurrentEquipedPlayerWeapon();
+            SetupAnimatorOverriderController();
+            PutWeaponInHands();
         }
 
-    
+        private void SetupWeapon()
+        {
+            weaponPrefab = weaponInUse.GetWeaponModel;
+            type = weaponInUse.type;
+            weapon = weaponPrefab.GetComponent<Weapon>();
+            timeBetweenAttacks = weaponInUse.GetTimeBetweenAttacks;
+        }
+
+        private void PutWeaponInHands()
+        {
+            weaponPrefab = weaponInUse.GetWeaponModel;
+            if (weaponInUse != null && weaponPrefab != null)
+            {
+                dominantHand = RequestDominantHand();
+                var weapon = Instantiate(weaponPrefab, dominantHand.transform);
+                weapon.transform.localPosition = weaponInUse.weaponGrip.localPosition;
+                weapon.transform.localRotation = weaponInUse.weaponGrip.localRotation;
+
+                // TODO: Change to bow only
+                if (type == WeaponType.Ranged)
+                {
+                    GameObject arrowSpawnPoint = weaponInUse.GetProjectilePrefab.transform.Find("ArrowSpawnPoint").gameObject;
+                    Instantiate(weaponInUse.GetProjectilePrefab, arrowSpawnPoint.transform.position, Quaternion.identity);
+                }
+
+            }
+        }
+
+        private GameObject RequestDominantHand()
+        {
+            var dominantHands = GetComponentsInChildren<DominantHand>();
+            int numberOfDominantHands = dominantHands.Length;
+            Assert.IsFalse(numberOfDominantHands <= 0, "Could not find any dominant hands, please add one");
+            Assert.IsFalse(numberOfDominantHands > 1, "Found multiple dominant hands, please remove one");
+            return dominantHands[0].gameObject;
+        }
+
+        private void SetupAnimatorOverriderController()
+        {
+            animator = GetComponent<Animator>();
+            animator.runtimeAnimatorController = animatorOverrideController;
+            animatorOverrideController["Basic Attack"] = weaponInUse.GetAttackAnimation;
+            animatorOverrideController["Idle"] = weaponInUse.GetIdleAnimation;
+            animatorOverrideController["Death"] = weaponInUse.GetDeathAnimation;
+            animatorOverrideController["Run"] = weaponInUse.GetRunningAnimation;
+        }
 
         private void FindCurrentEquipedPlayerWeapon()
         {

@@ -60,7 +60,6 @@ public class CameraController : MonoBehaviour
     {
         float rotateHorizontal = -Input.GetAxis("Mouse X");
         float rotateVertical = -Input.GetAxis("Mouse Y");
-        Debug.Log(transform.localRotation.x); 
         
         transform.RotateAround(player.transform.position, -Vector3.up, rotateHorizontal * sensitivity);
         transform.RotateAround(Vector3.zero, transform.right, rotateVertical * sensitivity);

@@ -18,8 +18,7 @@ namespace RPG.Weapons
         void Start()
         {
             FindPlayer();
-            FindPlayerWeapon();           
-
+            FindPlayerWeapon();
         }
 
         private void FindPlayerWeapon()
