@@ -61,7 +61,6 @@ namespace RPG.Weapons
                 GameObject player = other.gameObject;
                 var playerComponent = player.GetComponentInParent<Player>();
                 playerComponent.TakeDamage(weaponDamage);
-                Debug.Log("Player hit by: " + weaponDamage); 
             }
         }
     }

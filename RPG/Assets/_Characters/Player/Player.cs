@@ -135,10 +135,15 @@ namespace RPG.Characters
         {
             if(isAlive && !godMode)
             {
-                currentHealth = currentHealth - damage;
+                if(currentHealth > 0)
+                    currentHealth = currentHealth - damage;
 
+                Debug.Log("Player current health:" + currentHealth); 
                 if (currentHealth <= 0)
+                {
                     Die();
+                    currentHealth = 0; 
+                }
             }
         }
 
