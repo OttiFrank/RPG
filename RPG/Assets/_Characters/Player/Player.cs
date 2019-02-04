@@ -21,6 +21,7 @@ namespace RPG.Characters
 
         WeaponType type;
         ThirdPersonUserControl thirdPersonUserControl;
+        PlayerLog playerLog;
         GameObject weaponPrefab;
         GameObject projectileModel;
         GameObject dominantHand;
@@ -40,6 +41,8 @@ namespace RPG.Characters
         void Start()
         {
             thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
+            playerLog = GetComponent<PlayerLog>();
+
             SetupWeapon();
             SetMaxCharacterResources();
             PutWeaponInHands();
@@ -160,8 +163,10 @@ namespace RPG.Characters
         {            
             if (Input.GetButtonDown("Fire1"))
             {
-                if(currentStamina >= staminaDrain)
-                    AttackTarget();                
+                if (currentStamina >= staminaDrain)
+                    AttackTarget();
+                else
+                    playerLog.AddEvent("Can't do that, too low stamina");
             }
         }
 
