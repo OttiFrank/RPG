@@ -15,6 +15,9 @@ namespace RPG.Characters
         [SerializeField] float maxHealth = 100.0f;
         [SerializeField] WeaponConfig weaponInUse = null;
         [SerializeField] AnimatorOverrideController animatorOverrideController = null;
+        [SerializeField] float maxStamina = 100.0f;
+        [SerializeField] float staminaRecoveryRate = 10f;
+        [SerializeField] float staminaCooldown = 5f;
 
         WeaponType type;
         ThirdPersonUserControl thirdPersonUserControl;
@@ -23,9 +26,13 @@ namespace RPG.Characters
         GameObject dominantHand;
         GameObject arrowHand;
         float currentHealth;
+        float currentStamina;
+        float staminaStart = 0; 
         float timeBetweenAttacks;
         float attackTimer;
+        float staminaDrain;
         bool isAlive;
+        bool staminaCD = false; 
         Animator animator;
         Weapon weapon;
 
@@ -34,7 +41,7 @@ namespace RPG.Characters
         {
             thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
             SetupWeapon();
-            SetMaxCharacterHealth();
+            SetMaxCharacterResources();
             PutWeaponInHands();
             SetupRuntimeAnimator();
 
@@ -47,15 +54,18 @@ namespace RPG.Characters
             if (isAlive)
             {
                 HandleUserInput();
+                //TODO: Fix stamina recovery
+                
             }
         }
-
+       
         private void SetupWeapon()
         {
             weaponPrefab = weaponInUse.GetWeaponModel;
             type = weaponInUse.type;
             weapon = weaponPrefab.GetComponent<Weapon>();
             timeBetweenAttacks = weaponInUse.GetTimeBetweenAttacks;
+            staminaDrain = weaponInUse.GetStaminaDrain; 
         }
 
         private void PutWeaponInHands()
@@ -87,12 +97,11 @@ namespace RPG.Characters
             return dominantHands[0].gameObject; 
         }
 
-        
-
-        private void SetMaxCharacterHealth()
+        private void SetMaxCharacterResources()
         {
             isAlive = true;
             currentHealth = maxHealth;
+            currentStamina = maxStamina; 
         }
 
         public float healthAsPercentage
@@ -101,6 +110,14 @@ namespace RPG.Characters
             {
                 float healthAsPercentage = currentHealth / maxHealth;
                 return healthAsPercentage;
+            }
+        }
+        public float staminaAsPercentage
+        {
+            get
+            {
+                float staminaAsPercentage = currentStamina / maxStamina;
+                return staminaAsPercentage;
             }
         }
 
@@ -126,11 +143,16 @@ namespace RPG.Characters
         {
             if(isAlive)
             {
-                if (Time.time - attackTimer > timeBetweenAttacks)
+                if(currentStamina >= staminaDrain)
                 {
-                    animator.SetTrigger("Attack");
-                    attackTimer = Time.time;
+                    if (Time.time - attackTimer > timeBetweenAttacks)
+                    {
+                        currentStamina = currentStamina - staminaDrain;
+                        animator.SetTrigger("Attack");
+                        attackTimer = Time.time;
+                    }
                 }
+                
             }            
         }
 

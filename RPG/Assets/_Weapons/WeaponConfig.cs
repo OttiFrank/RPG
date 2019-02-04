@@ -20,6 +20,7 @@ namespace RPG.Weapons
         [SerializeField] float weaponDamage = 75f;
         [SerializeField] float weaponRange = 9f;
         [SerializeField] float timeBetweenAttacks = 4f;
+        [SerializeField] float staminaDrain = 50f;
         [SerializeField] AnimationClip attackAnim = null;
         [SerializeField] AnimationClip idleAnim = null;
         [SerializeField] AnimationClip deathAnim = null;
@@ -59,6 +60,13 @@ namespace RPG.Weapons
             get
             {
                 return timeBetweenAttacks;
+            }
+        }
+        public float GetStaminaDrain
+        {
+            get
+            {
+                return staminaDrain; 
             }
         }
 
