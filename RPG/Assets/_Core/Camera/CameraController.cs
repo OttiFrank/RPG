@@ -12,12 +12,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] Camera aimCamera;
     [SerializeField] Camera mainCamera;
 
-    float minHeight = -0.30f;
-    float maxHeight = 0.60f;
     Vector3 offset;
-    bool isAiming;
     float baseFOV;
     Transform baseCameraTransform;
+    bool isAiming;
 
     private void Awake()
     {

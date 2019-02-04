@@ -23,7 +23,6 @@ namespace RPG.Weapons
             if (GetComponentInParent<Player>() == null)
             {
                 aiCharacter = true;
-                Debug.Log("This is not a player");
             }
             else
                 aiCharacter = false;

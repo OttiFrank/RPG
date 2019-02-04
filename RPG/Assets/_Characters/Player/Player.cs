@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace RPG.Characters
 {
@@ -16,6 +17,7 @@ namespace RPG.Characters
         [SerializeField] AnimatorOverrideController animatorOverrideController;
 
         WeaponType type;
+        ThirdPersonUserControl thirdPersonUserControl;
         GameObject weaponPrefab;
         GameObject projectileModel;
         GameObject dominantHand;
@@ -24,13 +26,13 @@ namespace RPG.Characters
         float timeBetweenAttacks;
         float attackTimer;
         bool isAlive;
-        bool canAttack = true;
         Animator animator;
         Weapon weapon;
 
         // Start is called before the first frame update
         void Start()
         {
+            thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
             SetupWeapon();
             SetMaxCharacterHealth();
             PutWeaponInHands();
@@ -42,6 +44,7 @@ namespace RPG.Characters
         // Update is called once per frame
         void Update()
         {
+            Debug.Log(isAlive);
             if (isAlive)
             {
                 HandleUserInput();
@@ -91,6 +94,15 @@ namespace RPG.Characters
         {
             isAlive = true;
             currentHealth = maxHealth;
+        }
+
+        public float healthAsPercentage
+        {
+            get
+            {
+                float healthAsPercentage = currentHealth / maxHealth;
+                return healthAsPercentage;
+            }
         }
 
         private void SetupRuntimeAnimator()
@@ -151,6 +163,8 @@ namespace RPG.Characters
         {
             Debug.Log("Player died"); 
             animator.enabled = false;
+            thirdPersonUserControl.enabled = false;
+            isAlive = false;
         }
 
         void OnDrawGizmos()
