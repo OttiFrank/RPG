@@ -17,7 +17,7 @@ namespace RPG.Characters
         [SerializeField] AnimatorOverrideController animatorOverrideController = null;
         [SerializeField] float maxStamina = 100.0f;
         [SerializeField] float staminaRecoveryRate = 10f;
-        [SerializeField] float staminaCooldown = 5f;
+        [SerializeField] float staminaCooldown = 2f;
 
         WeaponType type;
         ThirdPersonUserControl thirdPersonUserControl;
@@ -27,10 +27,10 @@ namespace RPG.Characters
         GameObject arrowHand;
         float currentHealth;
         float currentStamina;
-        float staminaStart = 0; 
         float timeBetweenAttacks;
         float attackTimer;
         float staminaDrain;
+        float lastHitTimer = 0;
         bool isAlive;
         bool staminaCD = false; 
         Animator animator;
@@ -55,10 +55,35 @@ namespace RPG.Characters
             {
                 HandleUserInput();
                 //TODO: Fix stamina recovery
+                if(!staminaCD)
+                    HandleStaminaRecovery();
                 
             }
+
         }
-       
+
+        private void HandleStaminaRecovery()
+        {
+            if (Time.time - lastHitTimer > staminaCooldown || currentStamina < maxStamina)
+            {
+                Debug.Log(staminaCD);
+                StartCoroutine(StaminaRecoveryRate(staminaCooldown));
+            }
+        }
+
+        IEnumerator StaminaRecoveryRate(float cooldown)
+        {
+            staminaCD = true;
+            Debug.Log("Waiting");
+            yield return new WaitForSeconds(cooldown);
+            if(currentStamina < maxStamina)
+                currentStamina = currentStamina + staminaRecoveryRate;
+            Debug.Log("Added stamina");
+            staminaCD = false;
+            
+            
+        }
+
         private void SetupWeapon()
         {
             weaponPrefab = weaponInUse.GetWeaponModel;
@@ -135,7 +160,8 @@ namespace RPG.Characters
         {            
             if (Input.GetButtonDown("Fire1"))
             {
-                AttackTarget();                
+                if(currentStamina >= staminaDrain)
+                    AttackTarget();                
             }
         }
 
@@ -166,12 +192,18 @@ namespace RPG.Characters
 
         public void TakeDamage(float damage)
         {
-            if(isAlive && !godMode)
+            if (godMode)
+                return;
+            if(isAlive)
             {
                 if(currentHealth > 0)
+                {
                     currentHealth = currentHealth - damage;
+                    lastHitTimer = Time.time; 
+                }
+                    
 
-                Debug.Log("Player current health:" + currentHealth); 
+                //Debug.Log("Player current health:" + currentHealth); 
                 if (currentHealth <= 0)
                 {
                     Die();
