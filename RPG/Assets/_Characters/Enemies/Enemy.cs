@@ -15,20 +15,20 @@ namespace RPG.Characters
     {
 
         [SerializeField] float maxHealth = 100f;
-        [SerializeField] WeaponConfig weaponInUse;
-        [SerializeField] AnimatorOverrideController animatorOverrideController;
+        [SerializeField] WeaponConfig weaponInUse = null;
+        [SerializeField] AnimatorOverrideController animatorOverrideController = null;
         [SerializeField] float chaseRadius = 12f;
         [SerializeField] float attackRadius = 2f;
         
         WeaponType type;
-        Player player;
-        WeaponConfig playerWeapon;
-        AICharacterControl aiCharacterControl;
-        Weapon weapon;
-        Animator animator;
-        NavMeshAgent navMesh;
-        GameObject weaponPrefab;
-        GameObject dominantHand;
+        Player player = null;
+        WeaponConfig playerWeapon = null;
+        AICharacterControl aiCharacterControl = null;
+        Weapon weapon = null;
+        Animator animator = null;
+        NavMeshAgent navMesh = null;
+        GameObject weaponPrefab = null;
+        GameObject dominantHand = null;
 
         float currentHealth;
         float timeBetweenAttacks;

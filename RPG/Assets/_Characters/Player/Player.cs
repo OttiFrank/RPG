@@ -13,8 +13,8 @@ namespace RPG.Characters
     {
         [SerializeField] bool godMode = false;
         [SerializeField] float maxHealth = 100.0f;
-        [SerializeField] WeaponConfig weaponInUse;
-        [SerializeField] AnimatorOverrideController animatorOverrideController;
+        [SerializeField] WeaponConfig weaponInUse = null;
+        [SerializeField] AnimatorOverrideController animatorOverrideController = null;
 
         WeaponType type;
         ThirdPersonUserControl thirdPersonUserControl;
@@ -44,7 +44,6 @@ namespace RPG.Characters
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(isAlive);
             if (isAlive)
             {
                 HandleUserInput();

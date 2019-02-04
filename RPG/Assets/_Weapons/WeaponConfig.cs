@@ -16,21 +16,21 @@ namespace RPG.Weapons
         public bool AIWeapon = false;
         public Transform weaponGrip;
         public WeaponType type = WeaponType.Ranged;
-        [SerializeField] GameObject weaponModel;
-        [SerializeField] float weaponDamage;
-        [SerializeField] float weaponRange;
-        [SerializeField] AnimationClip attackAnim;
-        [SerializeField] AnimationClip idleAnim;
-        [SerializeField] AnimationClip deathAnim;
-        [SerializeField] float timeBetweenAttacks;
-        [SerializeField] AnimationClip runAnimation;
+        [SerializeField] GameObject weaponModel = null;
+        [SerializeField] float weaponDamage = 75f;
+        [SerializeField] float weaponRange = 9f;
+        [SerializeField] float timeBetweenAttacks = 4f;
+        [SerializeField] AnimationClip attackAnim = null;
+        [SerializeField] AnimationClip idleAnim = null;
+        [SerializeField] AnimationClip deathAnim = null;
+        [SerializeField] AnimationClip runAnimation = null;
 
         //Projectile
-        [SerializeField] float initialForce;
-        [SerializeField] float speed;
-        [SerializeField] float lifetime;
-        [SerializeField] Transform projectileSpawnSpot;
-        [SerializeField] GameObject projectilePrefab;
+        [SerializeField] float initialForce = 15f;
+        [SerializeField] float speed = 25f;
+        [SerializeField] float lifetime = 5f;
+        [SerializeField] Transform projectileSpawnSpot = null;
+        [SerializeField] GameObject projectilePrefab = null;
 
         // Getters
         public GameObject GetWeaponModel

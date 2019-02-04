@@ -5,17 +5,16 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject player = null;
     [SerializeField] float sensitivity = 4.0f; 
     [SerializeField] bool lockCursor = false;
     [Header("Cameras")]
-    [SerializeField] Camera aimCamera;
-    [SerializeField] Camera mainCamera;
+    [SerializeField] Camera aimCamera = null;
+    [SerializeField] Camera mainCamera = null;
 
     Vector3 offset;
     float baseFOV;
     Transform baseCameraTransform;
-    bool isAiming;
 
     private void Awake()
     {
@@ -76,7 +75,6 @@ public class CameraController : MonoBehaviour
 
     private void ZoomOut()
     {
-        isAiming = false;
         Debug.Log("Zoom out");
         aimCamera.enabled = false;
         mainCamera.enabled = true;
@@ -84,7 +82,6 @@ public class CameraController : MonoBehaviour
 
     private void ZoomIn()
     {
-        isAiming = true;
         Debug.Log("Zoom in");
         mainCamera.enabled = false;
         aimCamera.enabled = true;
