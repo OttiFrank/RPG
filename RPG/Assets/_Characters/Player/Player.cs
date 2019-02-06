@@ -11,6 +11,7 @@ namespace RPG.Characters
 {
     public class Player : MonoBehaviour, IDamageable
     {
+        [SerializeField] bool testMode = false;
         [SerializeField] bool godMode = false;
         [SerializeField] float maxHealth = 100.0f;
         [SerializeField] WeaponConfig weaponInUse = null;
@@ -33,7 +34,7 @@ namespace RPG.Characters
         float staminaDrain;
         float lastHitTimer = 0;
         bool isAlive;
-        bool staminaCD = false; 
+        bool staminaCD = false;
         Animator animator;
         Weapon weapon;
 
@@ -44,12 +45,17 @@ namespace RPG.Characters
             playerLog = GetComponent<PlayerLog>();
 
             SetupWeapon();
-            SetMaxCharacterResources();
+            if (!testMode)
+                SetMaxCharacterResources();
+            else
+                SetTestResources();
             PutWeaponInHands();
             SetupRuntimeAnimator();
 
             attackTimer = 0f;
         }
+
+        
 
         // Update is called once per frame
         void Update()
@@ -123,6 +129,12 @@ namespace RPG.Characters
             return dominantHands[0].gameObject; 
         }
 
+        private void SetTestResources()
+        {
+            isAlive = true;
+            currentHealth = (maxHealth / 2);
+            currentStamina = (maxStamina / 2);
+        }
         private void SetMaxCharacterResources()
         {
             isAlive = true;
