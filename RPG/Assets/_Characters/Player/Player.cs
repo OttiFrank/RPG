@@ -57,10 +57,8 @@ namespace RPG.Characters
             if (isAlive)
             {
                 HandleUserInput();
-                //TODO: Fix stamina recovery
                 if(!staminaCD)
-                    HandleStaminaRecovery();
-                
+                    HandleStaminaRecovery();                
             }
 
         }
@@ -201,12 +199,14 @@ namespace RPG.Characters
                 return;
             if(isAlive)
             {
-                if(currentHealth > 0)
+                if(currentHealth > 0 && currentHealth <= maxHealth)
                 {
                     currentHealth = currentHealth - damage;
                     lastHitTimer = Time.time; 
                 }
-                    
+
+                if (currentHealth >= maxHealth)
+                    currentHealth = maxHealth;                    
 
                 //Debug.Log("Player current health:" + currentHealth); 
                 if (currentHealth <= 0)
