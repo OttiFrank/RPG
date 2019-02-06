@@ -169,7 +169,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8811486473085519831}
-  m_LocalRotation: {x: -0, y: -0, z: -1.3877786e-17, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 8811486473089042955}
   - component: {fileID: 8811486473091066221}
   - component: {fileID: 8811486473091090761}
+  - component: {fileID: 1446588471}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -607,10 +608,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   godMode: 0
-  maxHealth: 100
-  weaponInUse: {fileID: 11400000, guid: 2dc396001ce41df428805350dae7e92e, type: 2}
+  maxHealth: 10000
+  weaponInUse: {fileID: 11400000, guid: b5d41c305250de24c9aad65d11564385, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: ce5c24e979b4bf04d99e37c6c22549ce,
     type: 2}
+  maxStamina: 100
+  staminaRecoveryRate: 10
+  staminaCooldown: 2
 --- !u!136 &8811486473089042955
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -657,6 +661,20 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 1
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.3
+--- !u!114 &1446588471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8811486473085534731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da66fcc3fc480a4296c5d8dca57bbba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLines: 10
+  secondsToRemoveEvents: 3
 --- !u!1 &8811486473085535087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1406,6 +1424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8811486473085301153}
+  - component: {fileID: 529044368}
   m_Layer: 0
   m_Name: EthanJaw
   m_TagString: Untagged
@@ -1430,6 +1449,23 @@ Transform:
   m_Father: {fileID: 8811486473085280999}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &529044368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8811486473085567523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ec2b96de5640e42a622fc3064f1c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Target: {fileID: 0}
+  m_AutoTargetPlayer: 1
+  m_UpdateType: 0
+  m_RotationRange: {x: 0, y: 0}
+  m_FollowSpeed: 1
 --- !u!1 &8811486473085567781
 GameObject:
   m_ObjectHideFlags: 0

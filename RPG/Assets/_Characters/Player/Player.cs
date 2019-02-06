@@ -69,7 +69,6 @@ namespace RPG.Characters
         {
             if (Time.time - lastHitTimer > staminaCooldown || currentStamina < maxStamina)
             {
-                Debug.Log(staminaCD);
                 StartCoroutine(StaminaRecoveryRate(staminaCooldown));
             }
         }
@@ -77,11 +76,12 @@ namespace RPG.Characters
         IEnumerator StaminaRecoveryRate(float cooldown)
         {
             staminaCD = true;
-            Debug.Log("Waiting");
             yield return new WaitForSeconds(cooldown);
             if(currentStamina < maxStamina)
+            {
                 currentStamina = currentStamina + staminaRecoveryRate;
-            Debug.Log("Added stamina");
+                Debug.Log("Added stamina");
+            }                
             staminaCD = false;
             
             

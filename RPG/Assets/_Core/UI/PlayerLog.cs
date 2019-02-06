@@ -34,18 +34,12 @@ namespace RPG.Core
             if (Eventlog.Count >= maxLines)
                 Eventlog.RemoveAt(0);
 
-            guiText = "";
-
-
-            foreach (string logEvent in Eventlog)
-            {
-                guiText += logEvent;
-                guiText += "\n";
-            }
+            RemoveLogText();
         }
 
         private void Update()
         {
+          
             if(Eventlog.Count >= 1)
             {
                 if (Time.time - removeTimer > secondsToRemoveEvents)
@@ -53,27 +47,35 @@ namespace RPG.Core
                     StartCoroutine(DeleteEvents());
                     removeTimer = Time.time;
                 }
-                guiText = "";
+                RemoveLogText();
+                
 
-
-                foreach (string logEvent in Eventlog)
-                {
-                    guiText += logEvent;
-                    guiText += "\n";
-                }
-
+            }
+            if(Eventlog.Count == 0)
+            {
+                RemoveLogText();
             }
                 
 
             
         }
 
+        private void RemoveLogText()
+        {
+            guiText = "";
+            foreach (string logEvent in Eventlog)
+            {
+                guiText += logEvent;
+                guiText += "\n";
+            }
+        }
+
         IEnumerator DeleteEvents()
         {
             Debug.Log("waiting for: " + secondsToRemoveEvents);
             yield return new WaitForSeconds(secondsToRemoveEvents);
-            Eventlog.RemoveAt(1);
-            Debug.Log(Eventlog.Count); 
+            if(Eventlog.Count > 0)
+                Eventlog.RemoveAt(0);                
         }
     }
 }

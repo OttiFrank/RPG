@@ -151,6 +151,7 @@ namespace RPG.Characters
             {
                 if (Time.time - attackTimer > timeBetweenAttacks)
                 {
+                    gameObject.transform.LookAt(player.transform); 
                     animator.SetTrigger("Attack");
                     attackTimer = Time.time;
                 }
