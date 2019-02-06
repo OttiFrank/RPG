@@ -16,14 +16,15 @@ MonoBehaviour:
   weaponGrip: {fileID: 3040293260122080082, guid: 2ed2d912a03d8964bb29676c68fd6d5f,
     type: 3}
   type: 1
-  weaponModel: {fileID: 4723293587412880818, guid: 69d2cb5214a76924ab7767c4a75c117d,
+  weaponModel: {fileID: 3575763990138051146, guid: 0bc38dacd1aa1cb429f24bef26621531,
     type: 3}
   weaponDamage: 75
   weaponRange: 0
+  timeBetweenAttacks: 4
+  staminaDrain: 50
   attackAnim: {fileID: 7400000, guid: 7b5b17e2d42e0424f9c36012595dc9b6, type: 3}
   idleAnim: {fileID: 7400000, guid: 8370b4128ccb08c4a8944d3f0d66cebc, type: 3}
   deathAnim: {fileID: 7400000, guid: 9757788373ec8734cb4f7a3db84aef2f, type: 3}
-  timeBetweenAttacks: 4
   runAnimation: {fileID: 7400000, guid: 0000872662c8fb241bf2ab6cc00dd461, type: 3}
   initialForce: 0
   speed: 0

@@ -35,6 +35,7 @@ namespace RPG.Characters
         float lastHitTimer = 0;
         bool isAlive;
         bool staminaCD = false;
+        bool rangedWeapon = false;
         Animator animator;
         Weapon weapon;
 
@@ -113,8 +114,9 @@ namespace RPG.Characters
                 // TODO: Change to bow only
                 if(type == WeaponType.Ranged)
                 {
-                    GameObject arrowSpawnPoint = weaponInUse.GetProjectilePrefab.transform.Find("ArrowSpawnPoint").gameObject;
-                    Instantiate(weaponInUse.GetProjectilePrefab, arrowSpawnPoint.transform.position, Quaternion.identity);
+                    rangedWeapon = true;
+                    //GameObject arrowSpawnPoint = weaponInUse.GetProjectilePrefab.transform.Find("ArrowSpawnPoint").gameObject;
+                    //Instantiate(weaponInUse.GetProjectilePrefab, arrowSpawnPoint.transform.position, Quaternion.identity);
                 }
                 
             }        
@@ -190,6 +192,13 @@ namespace RPG.Characters
                     {
                         currentStamina = currentStamina - staminaDrain;
                         animator.SetTrigger("Attack");
+
+                        if(rangedWeapon)
+                        {
+                            GameObject playerWeapon = GameObject.FindGameObjectWithTag("Weapon");
+                            playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
+                        }
+
                         attackTimer = Time.time;
                     }
                 }

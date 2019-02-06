@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d32f45ebf838a46b8929897c58ba36, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
+  AIWeapon: 0
   weaponGrip: {fileID: 6408420738684265445, guid: e64b2f1c166a179459643418ae7ce089,
     type: 3}
   type: 0
-  weaponModel: {fileID: 5903415246519814699, guid: dd431ff9ec853774c9831eebc34677cf,
+  weaponModel: {fileID: 5418549390320911484, guid: 02a0637f95dd80345945fb739ae5f2ef,
     type: 3}
   weaponDamage: 50
   weaponRange: 99
+  timeBetweenAttacks: 2
+  staminaDrain: 50
   attackAnim: {fileID: 7400000, guid: 24d693751e9fd0b42ba8f9595d8b5f5e, type: 3}
   idleAnim: {fileID: 7400000, guid: 601ee7f1bd0dfcc45b53cb118d6d3e58, type: 3}
   deathAnim: {fileID: 7400000, guid: 677509311bebcd54a89ef50613d1cfa7, type: 3}
-  timeBetweenAttacks: 2
   runAnimation: {fileID: 7400000, guid: f8e0a3512fe05e240bf9d4cff6d8fc26, type: 3}
   initialForce: 100
   speed: 50
   lifetime: 3
   projectileSpawnSpot: {fileID: 6408420738684265445, guid: e64b2f1c166a179459643418ae7ce089,
     type: 3}
-  projectilePrefab: {fileID: 2802576852413543387, guid: baa3bb976bdc2074fa8df6fa813cbdf7,
+  projectilePrefab: {fileID: 2151292756065656656, guid: 70ad36fe750b3b348b71ecf7003bc20b,
     type: 3}
