@@ -1,4 +1,5 @@
 ﻿using RPG.Characters;
+using RPG.Core;
 using RPG.Weapons;
 using System;
 using System.Collections;
@@ -10,6 +11,8 @@ public class Projectile : MonoBehaviour
     GameObject playerModel;
     WeaponConfig weaponInUse;
     Rigidbody rigidbody;
+    CameraController cameraController;
+    Collider col;
 
     float damage;
     float range;
@@ -20,11 +23,14 @@ public class Projectile : MonoBehaviour
     Transform projectileSpawnSpot;
     Player player;
     bool isShot = false;
+    Camera currentCamera;
 
     float lifeTimer;
     // Start is called before the first frame update
     void Start()
     {
+        col = gameObject.GetComponent<BoxCollider>();
+        cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>(); 
         rigidbody = GetComponent<Rigidbody>();
         if (!isShot)
             rigidbody.constraints = 
@@ -32,23 +38,34 @@ public class Projectile : MonoBehaviour
                 RigidbodyConstraints.FreezePositionY | 
                 RigidbodyConstraints.FreezePositionZ; 
         FindPlayer();
+        GetCurrentCamera();
         SetupWeaponConfig();
 
     }
+
+    private void GetCurrentCamera()
+    {
+        currentCamera = cameraController.GetCurrentCamera(); 
+    }
+
     public void FireProjectile()
     {
         gameObject.transform.parent = null; 
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.useGravity = true;
-        
-        rigidbody.AddRelativeForce(Vector3.forward * 2500);
+
+        float x = Screen.width / 2;
+        float y = Screen.height / 2;
+
+        var ray = currentCamera.ScreenPointToRay(new Vector3(x, y, 0));
+        rigidbody.velocity = ray.direction * 80;
         StartCoroutine(RemoveTrigger());
         
     }
 
     IEnumerator RemoveTrigger()
     {
-        Collider col = gameObject.GetComponent<BoxCollider>();
+        
         yield return new WaitForSeconds(.05f);
         col.isTrigger = false;
     }
@@ -80,6 +97,7 @@ public class Projectile : MonoBehaviour
             if (initialForce == 0)
                 GetComponent<Rigidbody>().velocity = transform.forward * speed;
         }
+        GetCurrentCamera();
         
     }
 
@@ -93,7 +111,21 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        col.enabled = false;
         Debug.Log(collision.gameObject.name);
+        rigidbody.AddRelativeForce(Vector3.zero);
+        rigidbody.useGravity = false;
+        
+        transform.parent = collision.gameObject.transform;
+        rigidbody.constraints = RigidbodyConstraints.FreezePosition;
+        rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        if(collision.gameObject.tag == "Enemy")
+        {
+            var enemyComponent = collision.gameObject.GetComponent<Enemy>();
+            enemyComponent.TakeDamage(weaponInUse.GetWeaponDamage); 
+        }
     }
+
 
 }

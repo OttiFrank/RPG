@@ -31,6 +31,8 @@ namespace RPG.Characters
         GameObject projectile;
         GameObject bowRoot;
         GameObject stringSpawn;
+        Camera currentCamera;
+        CameraController cameraController;
         float currentHealth;
         float currentStamina;
         float timeBetweenAttacks;
@@ -40,6 +42,7 @@ namespace RPG.Characters
         bool isAlive;
         bool staminaCD = false;
         bool rangedWeapon = false;
+        bool isLoaded = true;
         AnimationEvent evt;
         Animator animator;
         Weapon weapon;
@@ -47,6 +50,8 @@ namespace RPG.Characters
         // Start is called before the first frame update
         void Start()
         {
+            cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
+            currentCamera = cameraController.GetCurrentCamera();
             thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
             playerLog = GetComponent<PlayerLog>();
 
@@ -75,13 +80,8 @@ namespace RPG.Characters
                     HandleStaminaRecovery();
             }
 
-            if (Time.timeScale == 1.0f)
-                Time.timeScale = 0.7f;
-            else
-                Time.timeScale = 1.0f;
-            // Adjust fixed delta time according to timescale
-            // The fixed delta time will now be 0.02 frames per real-time second
-            Time.fixedDeltaTime = 0.02f * Time.timeScale;
+            if (!isLoaded)
+                PutArrowInBow();
 
         }
 
@@ -152,6 +152,7 @@ namespace RPG.Characters
                 projectile.transform.localPosition = stringSpawn.transform.localPosition + new Vector3(-0.25f, 0, 0);
                 projectile.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
             }
+            isLoaded = true;
         }
 
         private GameObject RequestDominantHand()
@@ -222,13 +223,22 @@ namespace RPG.Characters
                 {
                     if (Time.time - attackTimer > timeBetweenAttacks)
                     {
-                        currentStamina = currentStamina - staminaDrain;
+                        if(!testMode)
+                            currentStamina = currentStamina - staminaDrain;
                         animator.SetTrigger("Attack");
 
                         if (rangedWeapon)
                         {
+                            float x = Screen.width / 2;
+                            float y = Screen.height / 2;
+
+                            var ray = currentCamera.ScreenPointToRay(new Vector3(x, y, 0));
+
+
+                            gameObject.transform.LookAt(ray.direction); 
                             playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
-                            StartCoroutine(Shoot()); 
+                            StartCoroutine(Shoot());
+                            isLoaded = false;
                         }
 
                         attackTimer = Time.time;
@@ -240,7 +250,7 @@ namespace RPG.Characters
 
         IEnumerator Shoot()
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.55f);
             projectile.GetComponent<Projectile>().FireProjectile(); 
         }
 

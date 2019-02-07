@@ -58,7 +58,6 @@ namespace RPG.Weapons
         void Update()
         {
             
-            
         }
 
         private void OnTriggerEnter(Collider other)
