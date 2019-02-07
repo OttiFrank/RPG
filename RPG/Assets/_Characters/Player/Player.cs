@@ -29,6 +29,8 @@ namespace RPG.Characters
         GameObject arrowHand;
         GameObject playerWeapon;
         GameObject projectile;
+        GameObject bowRoot;
+        GameObject stringSpawn;
         float currentHealth;
         float currentStamina;
         float timeBetweenAttacks;
@@ -38,6 +40,7 @@ namespace RPG.Characters
         bool isAlive;
         bool staminaCD = false;
         bool rangedWeapon = false;
+        AnimationEvent evt;
         Animator animator;
         Weapon weapon;
 
@@ -56,6 +59,8 @@ namespace RPG.Characters
             SetupRuntimeAnimator();
 
             attackTimer = 0f;
+
+            
         }
 
 
@@ -69,6 +74,14 @@ namespace RPG.Characters
                 if (!staminaCD)
                     HandleStaminaRecovery();
             }
+
+            if (Time.timeScale == 1.0f)
+                Time.timeScale = 0.7f;
+            else
+                Time.timeScale = 1.0f;
+            // Adjust fixed delta time according to timescale
+            // The fixed delta time will now be 0.02 frames per real-time second
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
         }
 
@@ -96,8 +109,6 @@ namespace RPG.Characters
 
         private void SetupWeapon()
         {
-
-
             weaponPrefab = weaponInUse.GetWeaponModel;
             type = weaponInUse.type;
             weapon = weaponPrefab.GetComponent<Weapon>();
@@ -115,29 +126,31 @@ namespace RPG.Characters
                 weapon.transform.localPosition = weaponInUse.weaponGrip.localPosition;
                 weapon.transform.localRotation = weaponInUse.weaponGrip.localRotation;
 
+                playerWeapon = GameObject.FindGameObjectWithTag("Weapon");
+
                 // TODO: Change to bow only
                 if (type == WeaponType.Ranged)
                 {
                     rangedWeapon = true;
-
-                    playerWeapon = GameObject.FindGameObjectWithTag("Weapon");
-                    GameObject bowRoot;
-                    GameObject stringSpawn;
-
-                    bowRoot = playerWeapon.transform.Find("Bow_Root").gameObject;
-                    bowRoot = bowRoot.transform.Find("Bow_Jnt").gameObject;
-                    if (bowRoot != null)
-                    {
-                        stringSpawn = bowRoot.transform.Find("String_jnt").gameObject;
-                        Debug.Log(stringSpawn);
-                        projectile = Instantiate(weaponInUse.GetProjectilePrefab, stringSpawn.transform);
-                        projectile.transform.localPosition = stringSpawn.transform.localPosition + new Vector3(-0.25f, 0,0);
-                        projectile.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
-                    }
+                    PutArrowInBow();
+                    
                 }
 
                 
 
+            }
+        }
+
+        private void PutArrowInBow()
+        {
+            bowRoot = playerWeapon.transform.Find("Bow_Root").gameObject;
+            bowRoot = bowRoot.transform.Find("Bow_Jnt").gameObject;
+            if (bowRoot != null)
+            {
+                stringSpawn = bowRoot.transform.Find("String_jnt").gameObject;
+                projectile = Instantiate(weaponInUse.GetProjectilePrefab, stringSpawn.transform);
+                projectile.transform.localPosition = stringSpawn.transform.localPosition + new Vector3(-0.25f, 0, 0);
+                projectile.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
             }
         }
 
@@ -215,8 +228,7 @@ namespace RPG.Characters
                         if (rangedWeapon)
                         {
                             playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
-                            projectile.GetComponent<Projectile>().FireProjectile(); 
-
+                            StartCoroutine(Shoot()); 
                         }
 
                         attackTimer = Time.time;
@@ -224,6 +236,12 @@ namespace RPG.Characters
                 }
 
             }
+        }
+
+        IEnumerator Shoot()
+        {
+            yield return new WaitForSeconds(0.3f);
+            projectile.GetComponent<Projectile>().FireProjectile(); 
         }
 
         public WeaponConfig GetPlayerWeapon
@@ -273,6 +291,14 @@ namespace RPG.Characters
             Gizmos.DrawWireSphere(transform.position, weaponInUse.GetWeaponRange);
         }
 
+        private void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.tag == "Enemy")
+            {
+                var enemyComponent = collision.gameObject.GetComponent<Enemy>();
+                enemyComponent.TakeDamage(weaponInUse.GetWeaponDamage); 
+            }
+        }
     }
 }
 

@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
 {
     GameObject playerModel;
     WeaponConfig weaponInUse;
+    Rigidbody rigidbody;
 
     float damage;
     float range;
@@ -24,13 +25,32 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rigidbody = GetComponent<Rigidbody>();
+        if (!isShot)
+            rigidbody.constraints = 
+                RigidbodyConstraints.FreezePositionX | 
+                RigidbodyConstraints.FreezePositionY | 
+                RigidbodyConstraints.FreezePositionZ; 
         FindPlayer();
         SetupWeaponConfig();
 
     }
     public void FireProjectile()
     {
+        gameObject.transform.parent = null; 
+        rigidbody.constraints = RigidbodyConstraints.None;
+        rigidbody.useGravity = true;
+        
+        rigidbody.AddRelativeForce(Vector3.forward * 2500);
+        StartCoroutine(RemoveTrigger());
+        
+    }
 
+    IEnumerator RemoveTrigger()
+    {
+        Collider col = gameObject.GetComponent<BoxCollider>();
+        yield return new WaitForSeconds(.05f);
+        col.isTrigger = false;
     }
 
     private void FindPlayer()
@@ -73,12 +93,7 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Hit(collision);
-    }
-
-    private void Hit(Collision col)
-    {
-        player.TakeDamage(damage); 
+        Debug.Log(collision.gameObject.name);
     }
 
 }

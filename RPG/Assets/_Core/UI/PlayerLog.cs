@@ -72,7 +72,6 @@ namespace RPG.Core
 
         IEnumerator DeleteEvents()
         {
-            Debug.Log("waiting for: " + secondsToRemoveEvents);
             yield return new WaitForSeconds(secondsToRemoveEvents);
             if(Eventlog.Count > 0)
                 Eventlog.RemoveAt(0);                

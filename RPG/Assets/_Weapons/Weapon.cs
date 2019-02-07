@@ -12,26 +12,40 @@ namespace RPG.Weapons
         WeaponConfig weaponInUse;
         WeaponType type;
         Projectile projectile;
+        AnimationClip attackAnimation; 
+        
         float weaponDamage;
         float chargeTime;
+        bool isRanged = false;
         bool aiCharacter = false; 
         // Start is called before the first frame update
         void Start()
-        {
+        {            
             FindPlayer();
             FindPlayerWeapon();
+            GetWeaponAnimations();
             if (GetComponentInParent<Player>() == null)
-            {
                 aiCharacter = true;
-            }
             else
                 aiCharacter = false;
         }
+
+        private void GetWeaponAnimations()
+        {
+            attackAnimation = weaponInUse.GetAttackAnimation; 
+        }
+
+        
+
+        
 
         private void FindPlayerWeapon()
         {
             weaponInUse = player.GetPlayerWeapon;
             weaponDamage = weaponInUse.GetWeaponDamage;
+
+            if (weaponInUse.type == WeaponType.Ranged)
+                isRanged = true;
         }
 
         private void FindPlayer()
