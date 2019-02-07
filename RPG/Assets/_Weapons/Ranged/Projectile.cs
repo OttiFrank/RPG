@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
     bool justFired;
     Transform projectileSpawnSpot;
     Player player;
+    bool isShot = false;
 
     float lifeTimer;
     // Start is called before the first frame update
@@ -52,13 +53,22 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(isShot)
+        {
+            DestroyProjectile();            
+
+            if (initialForce == 0)
+                GetComponent<Rigidbody>().velocity = transform.forward * speed;
+        }
+        
+    }
+
+    private void DestroyProjectile()
+    {
         lifeTimer += Time.deltaTime;
 
         if (lifeTimer > lifetime)
             Destroy(gameObject);
-
-        if (initialForce == 0)
-            GetComponent<Rigidbody>().velocity = transform.forward * speed;
     }
 
     private void OnCollisionEnter(Collision collision)
