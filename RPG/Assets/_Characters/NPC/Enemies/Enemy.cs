@@ -13,7 +13,7 @@ namespace RPG.Characters
 {
     public class Enemy : MonoBehaviour, IDamageable
     {
-
+        [SerializeField] bool isTrapped = false;
         [SerializeField] float maxHealth = 100f;
         [SerializeField] WeaponConfig weaponInUse = null;
         [SerializeField] AnimatorOverrideController animatorOverrideController = null;
@@ -134,15 +134,19 @@ namespace RPG.Characters
         private void CheckDistanceToPlayer()
         {
             float dist = Vector3.Distance(transform.position, player.transform.position);
-            if (dist <= chaseRadius)
+            if (dist <= chaseRadius && !isTrapped)
             {
-                aiCharacterControl.SetTarget(player.transform);
-
-                if (dist <= attackRadius)
-                    AttackPlayer();
+                RunToTarget(dist); 
             }
             else
-                aiCharacterControl.SetTarget(null); 
+                aiCharacterControl.SetTarget(null);
+        }
+
+        private void RunToTarget(float dist)
+        {
+            aiCharacterControl.SetTarget(player.transform);
+            if (dist <= attackRadius)
+                AttackPlayer();
         }
 
         private void AttackPlayer()

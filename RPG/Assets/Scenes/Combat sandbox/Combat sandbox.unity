@@ -771,7 +771,7 @@ PrefabInstance:
     - target: {fileID: 6046351547283800000, guid: b3b2dbe4c68f8e44c9a9572748327d78,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2116828464562808693, guid: b3b2dbe4c68f8e44c9a9572748327d78,
         type: 3}
@@ -833,6 +833,12 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4090144860312858526, guid: b3b2dbe4c68f8e44c9a9572748327d78,
+        type: 3}
+      propertyPath: animatorOverrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: 52c5b460cc38f47418b3abe8de82e141,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3b2dbe4c68f8e44c9a9572748327d78, type: 3}
 --- !u!1001 &8757192124764810283
