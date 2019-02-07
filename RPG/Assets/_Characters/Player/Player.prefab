@@ -607,9 +607,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e758245e8053c8a4b86c8d5707fa8510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testMode: 1
   godMode: 0
-  maxHealth: 10000
-  weaponInUse: {fileID: 11400000, guid: b5d41c305250de24c9aad65d11564385, type: 2}
+  maxHealth: 150
+  weaponInUse: {fileID: 11400000, guid: 7d3d4779b6982794c96d7fea510fa500, type: 2}
   animatorOverrideController: {fileID: 22100000, guid: ce5c24e979b4bf04d99e37c6c22549ce,
     type: 2}
   maxStamina: 100

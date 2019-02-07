@@ -2831,10 +2831,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6ab7f2f325fcc4ba20e68f9efc5edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTrapped: 1
   maxHealth: 500
   weaponInUse: {fileID: 11400000, guid: b5d41c305250de24c9aad65d11564385, type: 2}
-  animatorOverrideController: {fileID: 22100000, guid: ce5c24e979b4bf04d99e37c6c22549ce,
+  animatorOverrideController: {fileID: 22100000, guid: 52c5b460cc38f47418b3abe8de82e141,
     type: 2}
+  chaseRadius: 12
+  attackRadius: 2
 --- !u!136 &7101316226533335411
 CapsuleCollider:
   m_ObjectHideFlags: 0

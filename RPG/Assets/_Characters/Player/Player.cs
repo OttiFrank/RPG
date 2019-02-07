@@ -28,6 +28,7 @@ namespace RPG.Characters
         GameObject dominantHand;
         GameObject arrowHand;
         GameObject playerWeapon;
+        GameObject projectile;
         float currentHealth;
         float currentStamina;
         float timeBetweenAttacks;
@@ -129,7 +130,7 @@ namespace RPG.Characters
                     {
                         stringSpawn = bowRoot.transform.Find("String_jnt").gameObject;
                         Debug.Log(stringSpawn);
-                        var projectile = Instantiate(weaponInUse.GetProjectilePrefab, stringSpawn.transform);
+                        projectile = Instantiate(weaponInUse.GetProjectilePrefab, stringSpawn.transform);
                         projectile.transform.localPosition = stringSpawn.transform.localPosition + new Vector3(-0.25f, 0,0);
                         projectile.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
                     }
@@ -214,7 +215,7 @@ namespace RPG.Characters
                         if (rangedWeapon)
                         {
                             playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
-
+                            projectile.GetComponent<Projectile>().FireProjectile(); 
 
                         }
 
@@ -271,6 +272,7 @@ namespace RPG.Characters
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, weaponInUse.GetWeaponRange);
         }
+
     }
 }
 
