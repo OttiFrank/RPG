@@ -43,6 +43,7 @@ namespace RPG.Characters
         bool staminaCD = false;
         bool rangedWeapon = false;
         bool isLoaded = true;
+        bool isUnarmed; 
         AnimationEvent evt;
         Animator animator;
         Weapon weapon;
@@ -51,7 +52,8 @@ namespace RPG.Characters
         void Start()
         {
             cameraController = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
-            currentCamera = cameraController.GetCurrentCamera();
+            if(cameraController != null) 
+                currentCamera = cameraController.GetCurrentCamera();
             thirdPersonUserControl = GetComponent<ThirdPersonUserControl>();
             playerLog = GetComponent<PlayerLog>();
 
@@ -61,7 +63,6 @@ namespace RPG.Characters
             else
                 SetTestResources();
             PutWeaponInHands();
-            SetupRuntimeAnimator();
 
             attackTimer = 0f;
 
@@ -109,6 +110,12 @@ namespace RPG.Characters
 
         private void SetupWeapon()
         {
+            if (weaponInUse == null)
+            {
+                isUnarmed = true;
+                return;
+            }
+                
             weaponPrefab = weaponInUse.GetWeaponModel;
             type = weaponInUse.type;
             weapon = weaponPrefab.GetComponent<Weapon>();
@@ -118,6 +125,8 @@ namespace RPG.Characters
 
         private void PutWeaponInHands()
         {
+            if (isUnarmed)
+                return;
             weaponPrefab = weaponInUse.GetWeaponModel;
             if (weaponInUse != null && weaponPrefab != null)
             {
@@ -134,9 +143,7 @@ namespace RPG.Characters
                     rangedWeapon = true;
                     PutArrowInBow();
                     
-                }
-
-                
+                }               
 
             }
         }
@@ -194,16 +201,6 @@ namespace RPG.Characters
             }
         }
 
-        private void SetupRuntimeAnimator()
-        {
-            animator = GetComponent<Animator>();
-            animator.runtimeAnimatorController = animatorOverrideController;
-            animatorOverrideController["Basic Attack"] = weaponInUse.GetAttackAnimation;
-            animatorOverrideController["Idle"] = weaponInUse.GetIdleAnimation;
-            animatorOverrideController["Death"] = weaponInUse.GetDeathAnimation;
-            animatorOverrideController["Run"] = weaponInUse.GetRunningAnimation;
-        }
-
         private void HandleUserInput()
         {
             if (Input.GetButtonDown("Fire1"))
@@ -254,7 +251,7 @@ namespace RPG.Characters
             projectile.GetComponent<Projectile>().FireProjectile(); 
         }
 
-        public WeaponConfig GetPlayerWeapon
+        public WeaponConfig GetPlayerWeaponConfig
         {
             get
             {
@@ -292,13 +289,6 @@ namespace RPG.Characters
             animator.enabled = false;
             thirdPersonUserControl.enabled = false;
             isAlive = false;
-        }
-
-        void OnDrawGizmos()
-        {
-            // Draw a yellow sphere at the transform's position
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, weaponInUse.GetWeaponRange);
         }
 
         private void OnCollisionEnter(Collision collision)

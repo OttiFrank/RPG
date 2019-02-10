@@ -110,7 +110,7 @@ namespace RPG.Characters
 
         private void FindCurrentEquipedPlayerWeapon()
         {
-            playerWeapon = player.GetPlayerWeapon;
+            playerWeapon = player.GetPlayerWeaponConfig;
             timeBetweenHits = playerWeapon.GetTimeBetweenAttacks;
         }
 
@@ -165,10 +165,11 @@ namespace RPG.Characters
         public void TakeDamage(float damage)
         {
             currentHealth = currentHealth - damage;
-
+            Debug.Log("Enemy take damage");
             if (currentHealth <= 0)
             {
-                Die();                
+                Die();  
+                
             }
                 
         }

@@ -41,7 +41,7 @@ namespace RPG.Weapons
 
         private void FindPlayerWeapon()
         {
-            weaponInUse = player.GetPlayerWeapon;
+            weaponInUse = player.GetPlayerWeaponConfig;
             weaponDamage = weaponInUse.GetWeaponDamage;
 
             if (weaponInUse.type == WeaponType.Ranged)
