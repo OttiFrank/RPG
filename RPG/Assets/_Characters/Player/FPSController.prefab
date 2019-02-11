@@ -134,11 +134,11 @@ GameObject:
   m_Component:
   - component: {fileID: 655455859}
   - component: {fileID: 655455857}
+  - component: {fileID: 911319574}
   - component: {fileID: 655455856}
   - component: {fileID: 655455855}
   - component: {fileID: 655455854}
   - component: {fileID: 655455853}
-  - component: {fileID: 655455858}
   m_Layer: 0
   m_Name: FPSController
   m_TagString: Player
@@ -173,16 +173,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e758245e8053c8a4b86c8d5707fa8510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testMode: 0
   godMode: 0
   maxHealth: 100
   weaponInDominantHand: {fileID: 11400000, guid: b5d41c305250de24c9aad65d11564385,
     type: 2}
   weaponInOffHand: {fileID: 11400000, guid: b5d41c305250de24c9aad65d11564385, type: 2}
-  animatorOverrideController: {fileID: 0}
   maxStamina: 100
   staminaRecoveryRate: 10
   staminaCooldown: 2
+--- !u!114 &911319574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655455852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da66fcc3fc480a4296c5d8dca57bbba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLines: 10
+  secondsToRemoveEvents: 3
 --- !u!143 &655455856
 CharacterController:
   m_ObjectHideFlags: 0
@@ -437,27 +449,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &655455858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655455852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e758245e8053c8a4b86c8d5707fa8510, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  testMode: 1
-  godMode: 0
-  maxHealth: 100
-  weaponInDominantHand: {fileID: 0}
-  weaponInOffHand: {fileID: 0}
-  animatorOverrideController: {fileID: 0}
-  maxStamina: 100
-  staminaRecoveryRate: 10
-  staminaCooldown: 2
 --- !u!1 &667921198
 GameObject:
   m_ObjectHideFlags: 0
