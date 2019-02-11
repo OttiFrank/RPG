@@ -32,7 +32,6 @@ namespace RPG.Core
 
         private void Update()
         {
-            HandleUserInput();
             if (lockCursor && Input.GetMouseButtonUp(0))
             {
                 Cursor.lockState = lockCursor ? CursorLockMode.Locked : CursorLockMode.None;
@@ -66,37 +65,12 @@ namespace RPG.Core
 
         }
 
-        private void HandleUserInput()
-        {
-            if (Input.GetButtonDown("Fire2"))
-                ZoomIn();
-
-            if (Input.GetButtonUp("Fire2"))
-                ZoomOut();
-        }
-
         public Camera GetCurrentCamera()
         {
             if (mainCamera.enabled)
                 return mainCamera;
             else
                 return aimCamera;
-        }
-
-        private void ZoomOut()
-        {
-            Debug.Log("Zoom out");
-            aimCamera.enabled = false;
-            mainCamera.enabled = true;
-        }
-
-        private void ZoomIn()
-        {
-            Debug.Log("Zoom in");
-            mainCamera.enabled = false;
-            aimCamera.enabled = true;
-
-
         }
 
     }

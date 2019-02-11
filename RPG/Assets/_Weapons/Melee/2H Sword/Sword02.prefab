@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 246021375090334862}
   - component: {fileID: 8645247907780134522}
   - component: {fileID: 5226108944541147379}
+  - component: {fileID: 1163473156557814931}
+  - component: {fileID: 8650351947198917252}
   m_Layer: 0
   m_Name: Sword02
   m_TagString: Untagged
@@ -98,6 +100,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!65 &1163473156557814931
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575763990138051146}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1347921, y: 0.19093724, z: 4.5976877}
+  m_Center: {x: 0, y: -0.000000014901161, z: 1.185952}
+--- !u!114 &8650351947198917252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3575763990138051146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d92da06ee80c7429ba63552d844bb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5355606867736579896
 GameObject:
   m_ObjectHideFlags: 0

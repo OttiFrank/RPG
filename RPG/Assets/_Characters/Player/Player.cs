@@ -45,7 +45,6 @@ namespace RPG.Characters
         bool isTwoHand;
         AnimationEvent evt;
         Weapon mainWeapon, offHandWeapon;
-        float attackTimer;
 
         // Start is called before the first frame update
         void Start()
@@ -65,10 +64,8 @@ namespace RPG.Characters
             else
                 SetTestResources();
 
-            attackTimer = 0f;
 
             mainHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
-            Debug.Log("After Start: " + mainHandWeaponPrefab);
 
         }
 
@@ -95,20 +92,21 @@ namespace RPG.Characters
                 {
                     var offHand = GameObject.Find("LeftHand");
                     GameObject offHandWeapon = offHand.transform.GetChild(0).gameObject;
-                    AttackTarget(offHandWeapon, false);
+                    if (isAlive)
+                        AttackTarget(offHandWeapon, false);
 
                 }
                 else
                     playerLog.AddEvent("Can't do that, too low stamina");
-
             }
-            else if (Input.GetButtonDown("Fire2"))
+            if (Input.GetButtonDown("Fire2"))
             {
                 if (currentStamina >= mainWeaponStaminaDrain)
                 {
                     var mainHand = GameObject.Find("RightHand");
                     GameObject mainHandWeapon = mainHand.transform.GetChild(0).gameObject;
-                    AttackTarget(mainHandWeapon, true);
+                    if (isAlive)
+                        AttackTarget(mainHandWeapon, true);
                 }
                 else
                     playerLog.AddEvent("Can't do that, too low stamina");
@@ -117,42 +115,31 @@ namespace RPG.Characters
 
         private void AttackTarget(GameObject weapon, bool isMainHand)
         {
-            if (isAlive)
+            Animator weaponAnimator = weapon.GetComponent<Animator>();
+            if (isMainHand)
             {
-                if (currentStamina >= mainWeaponStaminaDrain)
+                currentStamina = currentStamina - mainWeaponStaminaDrain;
+                weaponAnimator.SetTrigger("MainHandAttack");
+
+                if (rangedWeapon)
                 {
-                    if (Time.time - attackTimer > mainWeaponTimeBetweenAttacks)
-                    {
-                        if (isMainHand)
-                            currentStamina = currentStamina - mainWeaponStaminaDrain;
-                        else
-                            currentStamina = currentStamina - offHandWeaponStaminaDrain;
+                    float x = Screen.width / 2;
+                    float y = Screen.height / 2;
+
+                    var ray = currentCamera.ScreenPointToRay(new Vector3(x, y, 0));
 
 
-                        Animator weaponAnimator = weapon.GetComponent<Animator>();
-                        if (!isMainHand)
-                            weaponAnimator.SetTrigger("OffHandAttack");
-                        else
-                            weaponAnimator.SetTrigger("MainHandAttack");
+                    gameObject.transform.LookAt(ray.direction);
+                    playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
+                    StartCoroutine(Shoot());
+                    isLoaded = false;
+                }               
 
-                        if (rangedWeapon)
-                        {
-                            float x = Screen.width / 2;
-                            float y = Screen.height / 2;
-
-                            var ray = currentCamera.ScreenPointToRay(new Vector3(x, y, 0));
-
-
-                            gameObject.transform.LookAt(ray.direction);
-                            playerWeapon.GetComponent<Animator>().SetTrigger("Shoot");
-                            StartCoroutine(Shoot());
-                            isLoaded = false;
-                        }
-
-                        attackTimer = Time.time;
-                    }
-                }
-
+            }
+            if (!isMainHand)
+            {
+                currentStamina = currentStamina - offHandWeaponStaminaDrain;
+                weaponAnimator.SetTrigger("OffHandAttack");
             }
         }
 
@@ -185,7 +172,6 @@ namespace RPG.Characters
             offHandWeaponPrefab = weaponInOffHand.GetWeaponModel;
             offHandType = weaponInOffHand.type;
             offHandWeapon = offHandWeaponPrefab.GetComponent<Weapon>();
-            offHandWeaponTimeBetweenAttacks = weaponInOffHand.GetTimeBetweenAttacks;
             offHandWeaponStaminaDrain = weaponInOffHand.GetStaminaDrain;
         }
 
@@ -193,9 +179,7 @@ namespace RPG.Characters
         {
             mainHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
             mainWeaponType = weaponInDominantHand.type;
-            Debug.Log(weaponInDominantHand.GetTimeBetweenAttacks);
             mainWeapon = mainHandWeaponPrefab.GetComponent<Weapon>();
-            mainWeaponTimeBetweenAttacks = weaponInDominantHand.GetTimeBetweenAttacks;
             mainWeaponStaminaDrain = weaponInDominantHand.GetStaminaDrain;
 
             // Checks if the weapon used is two-handed or single handed
@@ -364,6 +348,7 @@ namespace RPG.Characters
 
         private void OnCollisionEnter(Collision collision)
         {
+
             if (collision.gameObject.tag == "Enemy")
             {
                 var enemyComponent = collision.gameObject.GetComponent<Enemy>();
