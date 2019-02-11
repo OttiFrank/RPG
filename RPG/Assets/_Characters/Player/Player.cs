@@ -14,18 +14,20 @@ namespace RPG.Characters
         [SerializeField] bool testMode = false;
         [SerializeField] bool godMode = false;
         [SerializeField] float maxHealth = 100.0f;
-        [SerializeField] WeaponConfig weaponInUse = null;
+        [SerializeField] WeaponConfig weaponInDominantHand = null;
+        [SerializeField] WeaponConfig weaponInOffHand = null;
         [SerializeField] AnimatorOverrideController animatorOverrideController = null;
         [SerializeField] float maxStamina = 100.0f;
         [SerializeField] float staminaRecoveryRate = 10f;
         [SerializeField] float staminaCooldown = 2f;
 
-        WeaponType type;
+        WeaponType mainType, offHandType;
         ThirdPersonUserControl thirdPersonUserControl;
         PlayerLog playerLog;
-        GameObject weaponPrefab;
+        GameObject mainHandWeaponPrefab;
+        GameObject offHandWeaponPrefab;
         GameObject projectileModel;
-        GameObject dominantHand;
+        GameObject dominantHand, offHand;
         GameObject arrowHand;
         GameObject playerWeapon;
         GameObject projectile;
@@ -35,18 +37,18 @@ namespace RPG.Characters
         CameraController cameraController;
         float currentHealth;
         float currentStamina;
-        float timeBetweenAttacks;
+        float mainWeaponTimeBetweenAttacks, offHandWeaponTimeBetweenAttacks;
         float attackTimer;
-        float staminaDrain;
+        float mainWeaponStaminaDrain, offHandWeaponStaminaDrain;
         float lastHitTimer = 0;
         bool isAlive;
         bool staminaCD = false;
         bool rangedWeapon = false;
         bool isLoaded = true;
-        bool isUnarmed; 
+        bool isUnarmed, isTwoHand; 
         AnimationEvent evt;
         Animator animator;
-        Weapon weapon;
+        Weapon mainWeapon, offHandWeapon;
 
         // Start is called before the first frame update
         void Start()
@@ -110,40 +112,84 @@ namespace RPG.Characters
 
         private void SetupWeapon()
         {
-            if (weaponInUse == null)
+            if (weaponInDominantHand == null && weaponInOffHand == null)
             {
                 isUnarmed = true;
                 return;
             }
-                
-            weaponPrefab = weaponInUse.GetWeaponModel;
-            type = weaponInUse.type;
-            weapon = weaponPrefab.GetComponent<Weapon>();
-            timeBetweenAttacks = weaponInUse.GetTimeBetweenAttacks;
-            staminaDrain = weaponInUse.GetStaminaDrain;
+            GetMainHandWeapon();
+            if(!isTwoHand)
+                GetOffHandWeapon();
+        }
+
+        private void GetOffHandWeapon()
+        {
+            offHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
+            offHandType = weaponInDominantHand.type;
+            offHandWeapon = offHandWeaponPrefab.GetComponent<Weapon>();
+            offHandWeaponTimeBetweenAttacks = weaponInDominantHand.GetTimeBetweenAttacks;
+            offHandWeaponStaminaDrain = weaponInDominantHand.GetStaminaDrain;
+        }
+
+        private void GetMainHandWeapon()
+        {
+            mainHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
+            mainType = weaponInDominantHand.type;
+            mainWeapon = mainHandWeaponPrefab.GetComponent<Weapon>();
+            mainWeaponTimeBetweenAttacks = weaponInDominantHand.GetTimeBetweenAttacks;
+            mainWeaponStaminaDrain = weaponInDominantHand.GetStaminaDrain;
+
+            // Checks if the weapon used is two-handed or single handed
+            WeaponHandle handle = weaponInDominantHand.handle;
+            if (handle == WeaponHandle.TwoHands)
+                isTwoHand = true;
+            else
+                isTwoHand = false;
         }
 
         private void PutWeaponInHands()
         {
             if (isUnarmed)
                 return;
-            weaponPrefab = weaponInUse.GetWeaponModel;
-            if (weaponInUse != null && weaponPrefab != null)
+            PutWeaponInDominantHand();
+            if(!isTwoHand)
+                PutWeaponInOffHand();
+            
+        }
+
+        private void PutWeaponInOffHand()
+        {
+            offHandWeaponPrefab = weaponInOffHand.GetWeaponModel; 
+            if(weaponInOffHand != null && offHandWeaponPrefab != null)
+            {
+                offHand = RequestOffHand();
+                var weapon = Instantiate(offHandWeaponPrefab, offHand.transform);
+                weapon.transform.localPosition = weaponInOffHand.weaponGrip.localPosition;
+                weapon.transform.localRotation = weaponInOffHand.weaponGrip.localRotation; 
+            }
+        }
+
+        
+
+        private void PutWeaponInDominantHand()
+        {
+            mainHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
+            if (weaponInDominantHand != null && mainHandWeaponPrefab != null)
             {
                 dominantHand = RequestDominantHand();
-                var weapon = Instantiate(weaponPrefab, dominantHand.transform);
-                weapon.transform.localPosition = weaponInUse.weaponGrip.localPosition;
-                weapon.transform.localRotation = weaponInUse.weaponGrip.localRotation;
+                var weapon = Instantiate(mainHandWeaponPrefab, dominantHand.transform);
+                weapon.transform.localPosition = weaponInDominantHand.weaponGrip.localPosition;
+                weapon.transform.localRotation = weaponInDominantHand.weaponGrip.localRotation;
 
                 playerWeapon = GameObject.FindGameObjectWithTag("Weapon");
 
                 // TODO: Change to bow only
-                if (type == WeaponType.Ranged)
+                if (mainType == WeaponType.Ranged)
                 {
                     rangedWeapon = true;
                     PutArrowInBow();
-                    
-                }               
+
+                }
 
             }
         }
@@ -155,11 +201,20 @@ namespace RPG.Characters
             if (bowRoot != null)
             {
                 stringSpawn = bowRoot.transform.Find("String_jnt").gameObject;
-                projectile = Instantiate(weaponInUse.GetProjectilePrefab, stringSpawn.transform);
+                projectile = Instantiate(weaponInDominantHand.GetProjectilePrefab, stringSpawn.transform);
                 projectile.transform.localPosition = stringSpawn.transform.localPosition + new Vector3(-0.25f, 0, 0);
                 projectile.transform.localRotation = Quaternion.Euler(0f, -90f, 90f);
             }
             isLoaded = true;
+        }
+
+        private GameObject RequestOffHand()
+        {
+            var offHands = GetComponentsInChildren<OffHand>();
+            int numberOfOffHands = offHands.Length;
+            Assert.IsFalse(numberOfOffHands <= 0, "Couldn't find any off-hands, please add one");
+            Assert.IsFalse(numberOfOffHands > 0, "Found multiple off-hands, please remove at least one");
+            return offHands[0].gameObject;
         }
 
         private GameObject RequestDominantHand()
@@ -205,7 +260,7 @@ namespace RPG.Characters
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                if (currentStamina >= staminaDrain)
+                if (currentStamina >= mainWeaponStaminaDrain)
                     AttackTarget();
                 else
                     playerLog.AddEvent("Can't do that, too low stamina");
@@ -216,12 +271,12 @@ namespace RPG.Characters
         {
             if (isAlive)
             {
-                if (currentStamina >= staminaDrain)
+                if (currentStamina >= mainWeaponStaminaDrain)
                 {
-                    if (Time.time - attackTimer > timeBetweenAttacks)
+                    if (Time.time - attackTimer > mainWeaponTimeBetweenAttacks)
                     {
                         if(!testMode)
-                            currentStamina = currentStamina - staminaDrain;
+                            currentStamina = currentStamina - mainWeaponStaminaDrain;
                         animator.SetTrigger("Attack");
 
                         if (rangedWeapon)
@@ -255,7 +310,7 @@ namespace RPG.Characters
         {
             get
             {
-                return weaponInUse;
+                return weaponInDominantHand;
             }
         }
 
@@ -296,7 +351,7 @@ namespace RPG.Characters
             if(collision.gameObject.tag == "Enemy")
             {
                 var enemyComponent = collision.gameObject.GetComponent<Enemy>();
-                enemyComponent.TakeDamage(weaponInUse.GetWeaponDamage); 
+                enemyComponent.TakeDamage(weaponInDominantHand.GetWeaponDamage); 
             }
         }
     }

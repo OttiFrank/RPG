@@ -16,6 +16,7 @@ MonoBehaviour:
   weaponGrip: {fileID: 6408420738684265445, guid: e64b2f1c166a179459643418ae7ce089,
     type: 3}
   type: 0
+  handle: 1
   weaponModel: {fileID: 5418549390320911484, guid: 02a0637f95dd80345945fb739ae5f2ef,
     type: 3}
   weaponDamage: 50

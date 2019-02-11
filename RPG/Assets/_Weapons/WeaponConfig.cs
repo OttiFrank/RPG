@@ -10,12 +10,18 @@ namespace RPG.Weapons
         Melee,
         Unarmed
     }
+    public enum WeaponHandle
+    {
+        OneHand,
+        TwoHands
+    }
     [CreateAssetMenu(menuName = ("RPG/Create new weapon"))]
     public class WeaponConfig : ScriptableObject
     {
         public bool AIWeapon = false;
         public Transform weaponGrip;
         public WeaponType type = WeaponType.Ranged;
+        public WeaponHandle handle = WeaponHandle.OneHand;
         [SerializeField] GameObject weaponModel = null;
         [SerializeField] float weaponDamage = 75f;
         [SerializeField] float weaponRange = 9f;
