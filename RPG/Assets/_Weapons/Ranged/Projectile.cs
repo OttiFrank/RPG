@@ -10,8 +10,8 @@ public class Projectile : MonoBehaviour
 {
     GameObject playerModel;
     WeaponConfig weaponInUse;
-    GameObject playerWeapon; 
-    Rigidbody rigidbody;
+    GameObject playerWeapon;
+    new Rigidbody rigidbody;
     CameraController cameraController;
     Collider col;
 

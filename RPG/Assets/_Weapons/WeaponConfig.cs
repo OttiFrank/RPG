@@ -31,6 +31,7 @@ namespace RPG.Weapons
         [SerializeField] AnimationClip idleAnim = null;
         [SerializeField] AnimationClip deathAnim = null;
         [SerializeField] AnimationClip runAnimation = null;
+        [SerializeField] AnimatorOverrideController animatorOverrideController = null; 
 
         //Projectile
         [SerializeField] float initialForce = 15f;
@@ -114,6 +115,13 @@ namespace RPG.Weapons
         }
 
         // Animations
+        public AnimatorOverrideController GetAnimatorOverrideController
+        {
+            get
+            {
+                return animatorOverrideController;
+            }
+        }
         public AnimationClip GetRunningAnimation
         {
             get

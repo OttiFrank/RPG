@@ -586,6 +586,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 655455857, guid: 14d019f0547f135419ee00983bdb0de0, type: 3}
+      propertyPath: animatorOverrideController
+      value: 
+      objectReference: {fileID: 22100000, guid: 174a6b2f2c98e604fbd7d201d3531580,
+        type: 2}
+    - target: {fileID: 655455857, guid: 14d019f0547f135419ee00983bdb0de0, type: 3}
+      propertyPath: testMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14d019f0547f135419ee00983bdb0de0, type: 3}
 --- !u!1001 &1608217456
@@ -884,6 +893,10 @@ PrefabInstance:
     - target: {fileID: 547997563, guid: 21d990179ad3cb2449171a067e32af22, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -7.9000244
+      objectReference: {fileID: 0}
+    - target: {fileID: 372022937, guid: 21d990179ad3cb2449171a067e32af22, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 17.400024
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21d990179ad3cb2449171a067e32af22, type: 3}

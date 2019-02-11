@@ -8,7 +8,7 @@ namespace RPG.Core
     public class PlayerLog : MonoBehaviour
     {
         List<string> Eventlog = new List<string>();
-        string guiText = "";
+        new string guiText = "";
 
         // Public VARS
         [SerializeField] int maxLines = 10;

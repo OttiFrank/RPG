@@ -16,7 +16,6 @@ namespace RPG.Weapons
         
         float weaponDamage;
         float chargeTime;
-        bool isRanged = false;
         bool aiCharacter = false; 
         // Start is called before the first frame update
         void Start()
@@ -43,9 +42,6 @@ namespace RPG.Weapons
         {
             weaponInUse = player.GetPlayerWeaponConfig;
             weaponDamage = weaponInUse.GetWeaponDamage;
-
-            if (weaponInUse.type == WeaponType.Ranged)
-                isRanged = true;
         }
 
         private void FindPlayer()
