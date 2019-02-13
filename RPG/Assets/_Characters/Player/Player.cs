@@ -1,5 +1,6 @@
 ﻿using RPG.Core;
 using RPG.Weapons;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -111,6 +112,19 @@ namespace RPG.Characters
                 else
                     playerLog.AddEvent("Can't do that, too low stamina");
             }
+            if (Input.GetButtonDown("Sheath Weapons"))
+            {
+                SheathWeapons();
+            }
+        }
+
+        private void SheathWeapons()
+        {
+            Debug.Log(mainHandWeaponPrefab);
+            Debug.Log(offHandWeaponPrefab);
+
+            Animator mainHandWeaponAnimator = mainHandWeaponPrefab.GetComponent<Animator>();
+            Animator offHandWeaponAnimator = offHandWeaponPrefab.GetComponent<Animator>();
         }
 
         private void AttackTarget(GameObject weapon, bool isMainHand)
