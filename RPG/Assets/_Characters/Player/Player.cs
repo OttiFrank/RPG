@@ -44,6 +44,7 @@ namespace RPG.Characters
         bool rangedWeapon = false;
         bool isLoaded = true;
         bool isTwoHand;
+        bool isWeaponWielded;
         AnimationEvent evt;
         Weapon mainWeapon, offHandWeapon;
 
@@ -68,6 +69,7 @@ namespace RPG.Characters
 
             mainHandWeaponPrefab = weaponInDominantHand.GetWeaponModel;
 
+            isWeaponWielded = true;
         }
 
         // Update is called once per frame
@@ -89,42 +91,75 @@ namespace RPG.Characters
         {
             if (Input.GetButtonDown("Fire1"))
             {
-                if (currentStamina >= offHandWeaponStaminaDrain)
+                Debug.Log(isWeaponWielded);
+                if(isWeaponWielded)
                 {
-                    var offHand = GameObject.Find("LeftHand");
-                    GameObject offHandWeapon = offHand.transform.GetChild(0).gameObject;
-                    if (isAlive)
-                        AttackTarget(offHandWeapon, false);
+                    if (currentStamina >= offHandWeaponStaminaDrain)
+                    {
+                        var offHand = GameObject.Find("LeftHand");
+                        GameObject offHandWeapon = offHand.transform.GetChild(0).gameObject;
+                        if (isAlive)
+                            AttackTarget(offHandWeapon, false);
 
+                    }
+                    else
+                        playerLog.AddEvent("Can't do that, too low stamina");
                 }
-                else
-                    playerLog.AddEvent("Can't do that, too low stamina");
+                
             }
+
             if (Input.GetButtonDown("Fire2"))
             {
-                if (currentStamina >= mainWeaponStaminaDrain)
+                if(isWeaponWielded)
                 {
-                    var mainHand = GameObject.Find("RightHand");
-                    GameObject mainHandWeapon = mainHand.transform.GetChild(0).gameObject;
-                    if (isAlive)
-                        AttackTarget(mainHandWeapon, true);
-                }
-                else
-                    playerLog.AddEvent("Can't do that, too low stamina");
+                    if (currentStamina >= mainWeaponStaminaDrain)
+                    {
+                        var mainHand = GameObject.Find("RightHand");
+                        GameObject mainHandWeapon = mainHand.transform.GetChild(0).gameObject;
+                        if (isAlive)
+                            AttackTarget(mainHandWeapon, true);
+                    }
+                    else
+                        playerLog.AddEvent("Can't do that, too low stamina");
+                }                
             }
+
             if (Input.GetButtonDown("Sheath Weapons"))
             {
                 SheathWeapons();
             }
+
         }
 
         private void SheathWeapons()
         {
-            Debug.Log(mainHandWeaponPrefab);
-            Debug.Log(offHandWeaponPrefab);
+            
 
-            Animator mainHandWeaponAnimator = mainHandWeaponPrefab.GetComponent<Animator>();
-            Animator offHandWeaponAnimator = offHandWeaponPrefab.GetComponent<Animator>();
+            Debug.Log(isWeaponWielded); 
+            GameObject weaponLeftParent = GameObject.Find("LeftHand").gameObject;
+            GameObject weaponRightParent = GameObject.Find("RightHand").gameObject;
+
+            GameObject weaponLeftHand = weaponLeftParent.transform.GetChild(0).gameObject;
+            GameObject weaponRightHand = weaponRightParent.transform.GetChild(0).gameObject;
+
+            Animator mainHandWeaponAnimator = weaponRightHand.GetComponent<Animator>();
+            Animator offHandWeaponAnimator = weaponLeftHand.GetComponent<Animator>();
+            Debug.Log(offHandWeaponAnimator.runtimeAnimatorController); 
+            if(isWeaponWielded)
+            {
+                mainHandWeaponAnimator.SetBool("isWeaponWielded", isWeaponWielded);
+                mainHandWeaponAnimator.SetBool("isMainWeapon", true);
+                offHandWeaponAnimator.SetBool("isOffWeapon", true); 
+                offHandWeaponAnimator.SetBool("isWeaponWielded", isWeaponWielded);
+            } else
+            {
+                mainHandWeaponAnimator.SetBool("isWeaponWielded", isWeaponWielded);
+                offHandWeaponAnimator.SetBool("isWeaponWielded", isWeaponWielded); 
+
+                //TODO: Make sure that stamina doesn't drain until weapon wield animation is fully done 
+            }
+            isWeaponWielded = !isWeaponWielded;
+
         }
 
         private void AttackTarget(GameObject weapon, bool isMainHand)
