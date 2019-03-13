@@ -45,6 +45,7 @@ namespace RPG.Characters
         bool isLoaded = true;
         bool isTwoHand;
         bool isWeaponWielded;
+        bool isRunning;
         AnimationEvent evt;
         Weapon mainWeapon, offHandWeapon;
 
@@ -100,12 +101,10 @@ namespace RPG.Characters
                         GameObject offHandWeapon = offHand.transform.GetChild(0).gameObject;
                         if (isAlive)
                             AttackTarget(offHandWeapon, false);
-
                     }
                     else
                         playerLog.AddEvent("Can't do that, too low stamina");
-                }
-                
+                }                
             }
 
             if (Input.GetButtonDown("Fire2"))
@@ -129,13 +128,35 @@ namespace RPG.Characters
                 SheathWeapons();
             }
 
+            if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                isRunning = true;
+                HandleRunAnimation(isRunning);                
+            }
+            if(Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                isRunning = false;
+                HandleRunAnimation(isRunning);
+            }
+
+        }
+
+        private void HandleRunAnimation(bool isRunning)
+        {
+            GameObject weaponLeftParent = GameObject.Find("LeftHand").gameObject;
+            GameObject weaponRightParent = GameObject.Find("RightHand").gameObject;
+            GameObject weaponLeftHand = weaponLeftParent.transform.GetChild(0).gameObject;
+            GameObject weaponRightHand = weaponRightParent.transform.GetChild(0).gameObject;
+
+            Animator mainHandWeaponAnimator = weaponRightHand.GetComponent<Animator>();
+            Animator offHandWeaponAnimator = weaponLeftHand.GetComponent<Animator>();
+
+            mainHandWeaponAnimator.SetBool("isRunning", isRunning);
+            offHandWeaponAnimator.SetBool("isRunning", isRunning);
         }
 
         private void SheathWeapons()
         {
-            
-
-            Debug.Log(isWeaponWielded); 
             GameObject weaponLeftParent = GameObject.Find("LeftHand").gameObject;
             GameObject weaponRightParent = GameObject.Find("RightHand").gameObject;
 
